@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WS Sistemas e Sites</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useEffect, useRef, useState } = React;
+
+    const COLORS = {
+      ink: "#05142F",
+      navy: "#071A3D",
+      blue: "#1463FF",
+      blueSoft: "#69A7FF",
+      orange: "#FF7A1A",
+      orangeSoft: "#FFB45C",
+      paper: "#F6F8FF",
+      white: "#FFFFFF",
+      muted: "#73809A",
+    };
+
+    const NAV_LINKS = ["Sobre", "Serviços", "Portfólio", "Processo", "Contato"];
+
+    function useInView(threshold = 0.18) {
+      const ref = useRef(null);
+      const [visible, setVisible] = useState(false);
+
+      useEffect(() => {
+        const node = ref.current;
+        if (!node) return;
+        const observer = new IntersectionObserver(([entry]) => {
+          if (entry.isIntersecting) setVisible(true);
+        }, { threshold });
+        observer.observe(node);
+        return () => observer.disconnect();
+      }, [threshold]);
+
+      return [ref, visible];
+    }
+
+    function Reveal({ children, delay = 0, className = "" }) {
+      const [ref, visible] = useInView();
+      return (
+        <div
+          ref={ref}
+          className={`reveal ${visible ? "reveal--show" : ""} ${className}`}
+          style={{ transitionDelay: `${delay}s` }}
+        >
+          {children}
+        </div>
+      );
+    }
+
+    function OrbitalBackground() {
+      return (
+        <div className="orbital" aria-hidden="true">
+          <div className="orbital__grid" />
+          <div className="orb orbital--blue" />
+          <div className="orb orb--orange" />
+          <div className="orbit orbit--one"><span /></div>
+          <div className="orbit orbit--two"><span /></div>
+          <div className="floating-chip chip--one">UX</div>
+          <div className="floating-chip chip--two">React</div>
+          <div className="floating-chip chip--three">SEO</div>
+        </div>
+      );
+    }
+
+    function scrollToSection(label) {
+      const id = label.toLowerCase();
+      document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    function Navbar({ scrolled }) {
+      const [open, setOpen] = useState(false);
+      return (
+        <nav className={`navbar ${scrolled ? "navbar--scrolled" : ""}`}>
+          <div className="navbar__inner">
+            <button className="brand" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} aria-label="Voltar ao topo">
+              <span className="brand__mark">WS</span>
+              <span className="brand__text">Sistemas <b>&</b> Sites</span>
+            </button>
+
+            <button className="menu-toggle" onClick={() => setOpen(!open)} aria-label="Abrir menu">
+              <span></span><span></span><span></span>
+            </button>
+
+            <div className={`navbar__links ${open ? "navbar__links--open" : ""}`}>
+              {NAV_LINKS.map((item) => (
+                <button key={item} onClick={() => { scrollToSection(item); setOpen(false); }}>
+                  {item}
+                </button>
+              ))}
+              <button className="nav-cta" onClick={() => { scrollToSection("Contato"); setOpen(false); }}>
+                Solicitar orçamento
+              </button>
+            </div>
+          </div>
+        </nav>
+      );
+    }
+
+    function Hero() {
+      return (
+        <header className="hero">
+          <OrbitalBackground />
+          <div className="hero__inner">
+            <Reveal>
+              <div className="eyebrow"><span></span> Estúdio digital para marcas que querem se destacar</div>
+              <h1>
+                Sites e sistemas com visual <em>único</em>, profissional e feito para vender.
+              </h1>
+              <p>
+                Criamos experiências digitais com identidade forte, performance e acabamento premium — sem cara de template pronto.
+              </p>
+              <div className="hero__actions">
+                <button className="btn btn--primary" onClick={() => scrollToSection("Contato")}>Começar projeto</button>
+                <button className="btn btn--ghost" onClick={() => scrollToSection("Portfólio")}>Ver conceito visual</button>
+              </div>
+              <div className="hero__metrics">
+                <div><strong>50+</strong><span>projetos</span></div>
+                <div><strong>5+</strong><span>anos</span></div>
+                <div><strong>100%</strong><span>foco no cliente</span></div>
+              </div>
+            </Reveal>
+
+            <Reveal delay={0.15} className="hero-card-wrap">
+              <div className="hero-card">
+                <div className="hero-card__top">
+                  <span></span><span></span><span></span>
+                </div>
+                <div className="hero-card__screen">
+                  <div className="screen-pill">WS Launch System</div>
+                  <div className="screen-title">Design estratégico + tecnologia</div>
+                  <div className="screen-bars">
+                    <span style={{ width: "88%" }}></span>
+                    <span style={{ width: "64%" }}></span>
+                    <span style={{ width: "76%" }}></span>
+                  </div>
+                  <div className="mini-grid">
+                    <div><b>01</b><span>Identidade</span></div>
+                    <div><b>02</b><span>Conversão</span></div>
+                    <div><b>03</b><span>Performance</span></div>
+                  </div>
+                </div>
+                <div className="hero-card__badge">+ visual exclusivo</div>
+              </div>
+            </Reveal>
+          </div>
+        </header>
+      );
+    }
+
+    function SectionTitle({ kicker, title, text, orange = false }) {
+      return (
+        <Reveal>
+          <div className="section-title">
+            <div className={`kicker ${orange ? "kicker--orange" : ""}`}>{kicker}</div>
+            <h2>{title}</h2>
+            {text && <p>{text}</p>}
+          </div>
+        </Reveal>
+      );
+    }
+
+    function Sobre() {
+      const features = [
+        ["✦", "Visual autoral", "Layout criado para diferenciar sua marca de sites comuns."],
+        ["⚡", "Alta velocidade", "Estrutura leve, rápida e agradável em qualquer tela."],
+        ["🎯", "Foco em conversão", "Cada seção guia o visitante até o contato ou orçamento."],
+        ["🔒", "Confiança", "Aparência sólida, segura e profissional para clientes exigentes."],
+      ];
+      return (
+        <section id="sobre" className="section about">
+          <div className="container about__grid">
+            <Reveal>
+              <div className="side-label">Quem somos</div>
+              <h2 className="split-title">Tecnologia com estética premium para empresas modernas.</h2>
+              <p className="lead">
+                A WS Sistemas e Sites desenvolve sites, landing pages e sistemas web personalizados, unindo design moderno, estratégia e performance.
+              </p>
+              <p>
+                O novo visual usa azul para transmitir tecnologia e confiança, laranja para energia e ação, além de formas orgânicas, cards de vidro e animações suaves para criar personalidade própria.
+              </p>
+            </Reveal>
+            <div className="feature-grid">
+              {features.map((item, i) => (
+                <Reveal key={item[1]} delay={i * 0.08}>
+                  <div className="feature-card">
+                    <span>{item[0]}</span>
+                    <h3>{item[1]}</h3>
+                    <p>{item[2]}</p>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    function Servicos() {
+      const services = [
+        { icon: "🌐", title: "Sites institucionais", desc: "Presença digital elegante para empresas, profissionais e marcas locais." },
+        { icon: "🚀", title: "Landing pages", desc: "Páginas persuasivas para anúncios, campanhas e lançamento de produtos." },
+        { icon: "⚙️", title: "Sistemas web", desc: "Soluções sob medida para automatizar processos e organizar sua operação." },
+        { icon: "🛠️", title: "Suporte e evolução", desc: "Melhorias contínuas, ajustes, manutenção e acompanhamento pós-entrega." },
+      ];
+      return (
+        <section id="serviços" className="section section--soft">
+          <div className="container">
+            <SectionTitle kicker="Serviços" title="O que podemos construir" text="Soluções digitais bonitas por fora, organizadas por dentro e pensadas para gerar resultado." />
+            <div className="service-grid">
+              {services.map((service, i) => (
+                <Reveal key={service.title} delay={i * 0.08}>
+                  <article className="service-card">
+                    <div className="service-card__icon">{service.icon}</div>
+                    <h3>{service.title}</h3>
+                    <p>{service.desc}</p>
+                    <span>Explorar serviço →</span>
+                  </article>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    function Portfolio() {
+      const projects = [
+        ["ClínicaPro", "Sistema Web", "Agenda, pacientes e painel administrativo em uma plataforma limpa."],
+        ["MegaStore", "E-commerce", "Loja moderna com vitrine, checkout e gestão de produtos."],
+        ["ImovelSmart", "Site", "Busca inteligente, cards elegantes e apresentação premium de imóveis."],
+        ["ConvertX", "Landing Page", "Página direta, rápida e criada para campanhas de conversão."],
+        ["FinanceFlow", "Dashboard", "Visualização de dados, gráficos e gestão financeira simples."],
+        ["RestaurApp", "Sistema", "Cardápio digital, reservas e presença digital para restaurantes."],
+      ];
+      return (
+        <section id="portfólio" className="section portfolio">
+          <div className="container">
+            <SectionTitle orange kicker="Portfólio" title="Projetos com personalidade" text="Cards conceituais para mostrar que cada entrega pode ter uma identidade própria." />
+            <div className="portfolio-grid">
+              {projects.map((project, i) => (
+                <Reveal key={project[0]} delay={i * 0.06}>
+                  <article className="project-card">
+                    <div className="project-card__visual">
+                      <span className="project-card__number">0{i + 1}</span>
+                      <div className="project-card__shape"></div>
+                    </div>
+                    <div className="project-card__body">
+                      <span>{project[1]}</span>
+                      <h3>{project[0]}</h3>
+                      <p>{project[2]}</p>
+                    </div>
+                  </article>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    function Processo() {
+      const steps = [
+        ["01", "Diagnóstico", "Entendemos o negócio, público, objetivos e referências visuais."],
+        ["02", "Direção visual", "Criamos uma estética própria com cores, ritmo, seções e componentes."],
+        ["03", "Construção", "Desenvolvemos com responsividade, performance e animações fluidas."],
+        ["04", "Entrega", "Testamos, refinamos e entregamos o projeto pronto para ser usado."],
+      ];
+      return (
+        <section id="processo" className="section section--dark">
+          <div className="container">
+            <SectionTitle kicker="Processo" title="Um método claro do briefing à entrega" text="Organização para o cliente acompanhar tudo com segurança e previsibilidade." />
+            <div className="timeline">
+              {steps.map((step, i) => (
+                <Reveal key={step[0]} delay={i * 0.1}>
+                  <div className="timeline-item">
+                    <span>{step[0]}</span>
+                    <h3>{step[1]}</h3>
+                    <p>{step[2]}</p>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    function Depoimentos() {
+      const reviews = [
+        ["Ricardo Almeida", "CEO, TechSolutions", "O site ficou com aparência muito mais profissional. A comunicação foi clara e o resultado passou confiança para nossos clientes."],
+        ["Mariana Costa", "Diretora, ImovelPro", "A identidade visual ficou diferente de tudo que tínhamos visto. Bonito, rápido e muito bem organizado."],
+        ["Fernando Souza", "Fundador, FinanceApp", "O sistema simplificou processos internos e o visual ficou moderno sem perder objetividade."],
+      ];
+      return (
+        <section className="section testimonials">
+          <div className="container">
+            <SectionTitle orange kicker="Depoimentos" title="Experiências que geram confiança" />
+            <div className="testimonial-grid">
+              {reviews.map((review, i) => (
+                <Reveal key={review[0]} delay={i * 0.1}>
+                  <article className="testimonial-card">
+                    <div className="stars">★★★★★</div>
+                    <p>“{review[2]}”</p>
+                    <div>
+                      <strong>{review[0]}</strong>
+                      <span>{review[1]}</span>
+                    </div>
+                  </article>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    function Contato() {
+      const [form, setForm] = useState({ nome: "", email: "", empresa: "", mensagem: "" });
+      const [sent, setSent] = useState(false);
+      const canSubmit = form.nome.trim() && form.email.trim() && form.mensagem.trim();
+      const handle = (field) => (event) => setForm((prev) => ({ ...prev, [field]: event.target.value }));
+
+      function submit() {
+        if (!canSubmit) return;
+        const subject = encodeURIComponent(`Orçamento - ${form.nome}${form.empresa ? " | " + form.empresa : ""}`);
+        const body = encodeURIComponent(`Nome: ${form.nome}\nE-mail: ${form.email}\nEmpresa: ${form.empresa || "Não informado"}\n\nMensagem:\n${form.mensagem}`);
+        window.open(`mailto:WS.sistemasesites@gmail.com?subject=${subject}&body=${body}`, "_blank");
+        setSent(true);
+        setTimeout(() => setSent(false), 3800);
+      }
+
+      return (
+        <section id="contato" className="section contact">
+          <div className="container contact__grid">
+            <Reveal>
+              <div className="side-label side-label--orange">Contato</div>
+              <h2 className="split-title">Vamos criar algo que não pareça igual a todo mundo?</h2>
+              <p className="lead">Conte sua ideia e receba uma proposta para transformar sua presença digital em algo mais único, bonito e profissional.</p>
+              <div className="contact-list">
+                <a href="mailto:WS.sistemasesites@gmail.com"><span>✉️</span><div><b>E-mail</b><small>WS.sistemasesites@gmail.com</small></div></a>
+                <a href="https://wa.me/5500000000000" target="_blank"><span>💬</span><div><b>WhatsApp</b><small>Fale pelo WhatsApp</small></div></a>
+              </div>
+            </Reveal>
+
+            <Reveal delay={0.14}>
+              <div className="form-card">
+                <h3>Enviar mensagem</h3>
+                <div className="form-row">
+                  <label>Nome *<input value={form.nome} onChange={handle("nome")} placeholder="Seu nome" /></label>
+                  <label>E-mail *<input value={form.email} onChange={handle("email")} placeholder="seu@email.com" /></label>
+                </div>
+                <label>Empresa<input value={form.empresa} onChange={handle("empresa")} placeholder="Nome da empresa" /></label>
+                <label>Mensagem *<textarea value={form.mensagem} onChange={handle("mensagem")} placeholder="Descreva seu projeto..." rows="5" /></label>
+                <button className="btn btn--primary form-button" disabled={!canSubmit} onClick={submit}>{sent ? "Abrindo e-mail..." : "Enviar orçamento →"}</button>
+              </div>
+            </Reveal>
+          </div>
+        </section>
+      );
+    }
+
+    function CTA() {
+      return (
+        <section className="cta">
+          <div className="container">
+            <Reveal>
+              <div className="cta__box">
+                <span>🚀</span>
+                <h2>Seu próximo site pode ser o ponto de virada da sua marca.</h2>
+                <p>Um visual forte ajuda sua empresa a ser lembrada, transmitir confiança e vender melhor.</p>
+                <button className="btn btn--primary" onClick={() => scrollToSection("Contato")}>Solicitar proposta</button>
+              </div>
+            </Reveal>
+          </div>
+        </section>
+      );
+    }
+
+    function Footer() {
+      return (
+        <footer className="footer">
+          <div className="container footer__grid">
+            <div>
+              <div className="footer-brand"><span>WS</span> WS Sistemas &amp; Sites</div>
+              <p>Sites, landing pages e sistemas web com design exclusivo, tecnologia e estratégia.</p>
+            </div>
+            <div>
+              <b>Serviços</b>
+              <a>Sites</a><a>Landing pages</a><a>Sistemas web</a><a>Suporte</a>
+            </div>
+            <div>
+              <b>Empresa</b>
+              <a>Sobre</a><a>Portfólio</a><a>Processo</a><a>Contato</a>
+            </div>
+            <div>
+              <b>Contato</b>
+              <a href="mailto:WS.sistemasesites@gmail.com">E-mail</a><a href="https://wa.me/5500000000000">WhatsApp</a><a>Instagram</a><a>LinkedIn</a>
+            </div>
+          </div>
+          <div className="container footer__bottom">
+            <span>© 2026 WS Sistemas e Sites. Todos os direitos reservados.</span>
+            <span>Design exclusivo em azul + laranja.</span>
+          </div>
+        </footer>
+      );
+    }
+
+    function App() {
+      const [scrolled, setScrolled] = useState(false);
+      useEffect(() => {
+        const onScroll = () => setScrolled(window.scrollY > 30);
+        onScroll();
+        window.addEventListener("scroll", onScroll);
+        return () => window.removeEventListener("scroll", onScroll);
+      }, []);
+
+      return (
+        <>
+          <style>{`
+            @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap');
+            :root {
+              --ink: ${COLORS.ink};
+              --navy: ${COLORS.navy};
+              --blue: ${COLORS.blue};
+              --blue-soft: ${COLORS.blueSoft};
+              --orange: ${COLORS.orange};
+              --orange-soft: ${COLORS.orangeSoft};
+              --paper: ${COLORS.paper};
+              --white: ${COLORS.white};
+              --muted: ${COLORS.muted};
+              --shadow: 0 26px 80px rgba(5, 20, 47, .14);
+              --radius: 28px;
+            }
+            * { box-sizing: border-box; margin: 0; padding: 0; }
+            html { scroll-behavior: smooth; }
+            body { font-family: 'Manrope', system-ui, sans-serif; color: var(--ink); background: var(--paper); overflow-x: hidden; }
+            button, input, textarea { font-family: inherit; }
+            button { cursor: pointer; }
+            a { color: inherit; }
+            ::selection { background: rgba(255,122,26,.28); }
+            ::-webkit-scrollbar { width: 8px; }
+            ::-webkit-scrollbar-track { background: #EDF2FF; }
+            ::-webkit-scrollbar-thumb { background: linear-gradient(var(--blue), var(--orange)); border-radius: 999px; }
+            .container { width: min(1180px, calc(100% - 40px)); margin: 0 auto; }
+            .navbar { position: fixed; inset: 18px 0 auto; z-index: 100; transition: .35s ease; pointer-events: none; }
+            .navbar__inner { pointer-events: auto; height: 68px; width: min(1180px, calc(100% - 40px)); margin: 0 auto; padding: 0 10px 0 18px; border: 1px solid rgba(255,255,255,.16); border-radius: 999px; display: flex; align-items: center; justify-content: space-between; background: rgba(5,20,47,.34); backdrop-filter: blur(18px); box-shadow: 0 12px 40px rgba(0,0,0,.14); }
+            .navbar--scrolled .navbar__inner { background: rgba(255,255,255,.86); border-color: rgba(20,99,255,.14); box-shadow: 0 20px 60px rgba(5,20,47,.12); }
+            .brand { border: 0; background: none; display: inline-flex; align-items: center; gap: 12px; color: #fff; font-weight: 800; }
+            .navbar--scrolled .brand { color: var(--ink); }
+            .brand__mark { width: 42px; height: 42px; border-radius: 14px; display: grid; place-items: center; color: #fff; background: linear-gradient(135deg, var(--blue), var(--orange)); box-shadow: 0 10px 30px rgba(20,99,255,.35); letter-spacing: -.05em; }
+            .brand__text b { color: var(--orange); }
+            .navbar__links { display: flex; align-items: center; gap: 6px; }
+            .navbar__links button { border: 0; background: transparent; color: rgba(255,255,255,.82); padding: 12px 14px; border-radius: 999px; font-size: 14px; font-weight: 700; transition: .2s ease; }
+            .navbar--scrolled .navbar__links button { color: var(--ink); }
+            .navbar__links button:hover { background: rgba(255,255,255,.12); transform: translateY(-1px); }
+            .navbar--scrolled .navbar__links button:hover { background: rgba(20,99,255,.08); }
+            .navbar__links .nav-cta { color: #fff; background: linear-gradient(135deg, var(--blue), var(--orange)); padding-inline: 20px; box-shadow: 0 12px 30px rgba(255,122,26,.28); }
+            .navbar--scrolled .navbar__links .nav-cta { color: #fff; }
+            .menu-toggle { display: none; border: 0; background: rgba(255,255,255,.1); border-radius: 14px; width: 44px; height: 44px; place-items: center; }
+            .menu-toggle span { width: 18px; height: 2px; background: #fff; display: block; margin: 3px 0; border-radius: 3px; }
+            .navbar--scrolled .menu-toggle span { background: var(--ink); }
+            .hero { position: relative; min-height: 100vh; display: grid; place-items: center; padding: 130px 0 80px; background: radial-gradient(circle at 20% 10%, rgba(20,99,255,.34), transparent 34%), radial-gradient(circle at 85% 18%, rgba(255,122,26,.24), transparent 32%), linear-gradient(135deg, #031028 0%, #071A3D 54%, #06102A 100%); overflow: hidden; }
+            .hero__inner { width: min(1180px, calc(100% - 40px)); margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1.02fr) minmax(340px, .78fr); gap: 64px; align-items: center; position: relative; z-index: 2; }
+            .orbital { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+            .orbital__grid { position: absolute; inset: 0; opacity: .25; background-image: linear-gradient(rgba(255,255,255,.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.08) 1px, transparent 1px); background-size: 70px 70px; mask-image: radial-gradient(circle at 50% 35%, #000, transparent 72%); animation: drift 18s linear infinite; }
+            .orb { position: absolute; border-radius: 999px; filter: blur(18px); opacity: .55; animation: pulse 5s ease-in-out infinite alternate; }
+            .orb--blue { width: 380px; height: 380px; background: var(--blue); left: -140px; bottom: 8%; }
+            .orb--orange { width: 260px; height: 260px; background: var(--orange); right: 7%; top: 12%; animation-delay: 1.2s; }
+            .orbit { position: absolute; width: 540px; height: 540px; border: 1px solid rgba(255,255,255,.12); border-radius: 50%; right: 4%; top: 18%; animation: rotate 18s linear infinite; }
+            .orbit--two { width: 430px; height: 430px; right: 8%; top: 24%; animation-duration: 13s; animation-direction: reverse; }
+            .orbit span { position: absolute; width: 13px; height: 13px; border-radius: 50%; background: var(--orange); box-shadow: 0 0 24px var(--orange); left: 50%; top: -7px; }
+            .floating-chip { position: absolute; color: #fff; font-weight: 800; font-size: 12px; letter-spacing: .08em; padding: 10px 14px; border: 1px solid rgba(255,255,255,.16); background: rgba(255,255,255,.08); backdrop-filter: blur(14px); border-radius: 999px; animation: float 4s ease-in-out infinite; }
+            .chip--one { right: 34%; top: 26%; }
+            .chip--two { right: 10%; bottom: 25%; animation-delay: .8s; }
+            .chip--three { left: 8%; bottom: 22%; animation-delay: 1.5s; }
+            .eyebrow { display: inline-flex; align-items: center; gap: 10px; color: rgba(255,255,255,.78); border: 1px solid rgba(255,255,255,.14); background: rgba(255,255,255,.08); backdrop-filter: blur(16px); padding: 10px 16px; border-radius: 999px; font-size: 13px; font-weight: 700; margin-bottom: 26px; }
+            .eyebrow span { width: 9px; height: 9px; border-radius: 50%; background: var(--orange); box-shadow: 0 0 18px var(--orange); }
+            .hero h1 { color: #fff; font-family: 'Space Grotesk', sans-serif; font-size: clamp(2.65rem, 6vw, 5.9rem); line-height: .93; letter-spacing: -.065em; max-width: 780px; }
+            .hero h1 em { font-style: normal; color: transparent; background: linear-gradient(90deg, var(--orange-soft), var(--orange), var(--blue-soft)); -webkit-background-clip: text; background-clip: text; }
+            .hero p { color: rgba(255,255,255,.68); font-size: clamp(1rem, 1.4vw, 1.18rem); line-height: 1.75; max-width: 590px; margin: 28px 0 36px; }
+            .hero__actions { display: flex; flex-wrap: wrap; gap: 14px; }
+            .btn { border: 0; padding: 15px 26px; border-radius: 16px; font-weight: 800; font-size: 15px; transition: transform .22s ease, box-shadow .22s ease, opacity .22s ease; }
+            .btn:hover { transform: translateY(-3px); }
+            .btn--primary { color: #fff; background: linear-gradient(135deg, var(--blue), var(--orange)); box-shadow: 0 18px 44px rgba(20,99,255,.28), 0 12px 34px rgba(255,122,26,.22); }
+            .btn--ghost { color: #fff; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.16); backdrop-filter: blur(16px); }
+            .hero__metrics { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 44px; }
+            .hero__metrics div { min-width: 132px; padding: 18px; border-radius: 22px; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.12); backdrop-filter: blur(16px); }
+            .hero__metrics strong { display: block; color: #fff; font-size: 28px; line-height: 1; }
+            .hero__metrics span { color: rgba(255,255,255,.55); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; margin-top: 8px; display: block; }
+            .hero-card-wrap { justify-self: end; width: 100%; }
+            .hero-card { position: relative; width: min(440px, 100%); margin-left: auto; padding: 14px; border-radius: 34px; background: linear-gradient(145deg, rgba(255,255,255,.22), rgba(255,255,255,.06)); border: 1px solid rgba(255,255,255,.2); box-shadow: 0 40px 110px rgba(0,0,0,.34); backdrop-filter: blur(20px); transform: rotate(2deg); animation: cardFloat 5s ease-in-out infinite; }
+            .hero-card__top { height: 48px; display: flex; align-items: center; gap: 8px; padding-left: 12px; }
+            .hero-card__top span { width: 11px; height: 11px; border-radius: 50%; background: rgba(255,255,255,.28); }
+            .hero-card__top span:nth-child(1) { background: var(--orange); }
+            .hero-card__top span:nth-child(2) { background: var(--blue-soft); }
+            .hero-card__screen { padding: 30px; min-height: 420px; border-radius: 24px; color: #fff; background: radial-gradient(circle at 20% 20%, rgba(255,122,26,.22), transparent 30%), radial-gradient(circle at 90% 0%, rgba(20,99,255,.4), transparent 38%), linear-gradient(160deg, rgba(5,20,47,.98), rgba(7,26,61,.92)); overflow: hidden; position: relative; }
+            .hero-card__screen::after { content: ''; position: absolute; width: 220px; height: 220px; border: 38px solid rgba(255,255,255,.06); border-radius: 50%; right: -80px; bottom: -80px; }
+            .screen-pill { display: inline-flex; padding: 8px 12px; border-radius: 999px; font-size: 12px; font-weight: 800; color: var(--orange-soft); background: rgba(255,122,26,.12); border: 1px solid rgba(255,122,26,.26); }
+            .screen-title { font-family: 'Space Grotesk', sans-serif; font-size: 34px; line-height: 1; letter-spacing: -.04em; max-width: 280px; margin: 60px 0 30px; }
+            .screen-bars { display: grid; gap: 12px; margin-bottom: 34px; }
+            .screen-bars span { height: 11px; border-radius: 999px; background: linear-gradient(90deg, var(--blue), var(--orange)); animation: bar 2.8s ease-in-out infinite alternate; }
+            .screen-bars span:nth-child(2) { animation-delay: .3s; opacity: .75; }
+            .screen-bars span:nth-child(3) { animation-delay: .6s; opacity: .55; }
+            .mini-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; position: relative; z-index: 1; }
+            .mini-grid div { padding: 14px 10px; border-radius: 16px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12); }
+            .mini-grid b { display: block; color: var(--orange-soft); margin-bottom: 8px; }
+            .mini-grid span { color: rgba(255,255,255,.7); font-size: 11px; font-weight: 700; }
+            .hero-card__badge { position: absolute; right: -16px; bottom: 54px; color: var(--ink); background: #fff; padding: 14px 18px; border-radius: 18px; font-weight: 900; box-shadow: var(--shadow); }
+            .section { padding: 118px 0; position: relative; }
+            .section--soft { background: linear-gradient(180deg, #fff, #EFF4FF); }
+            .section--dark { color: #fff; background: radial-gradient(circle at 10% 0%, rgba(20,99,255,.36), transparent 32%), radial-gradient(circle at 90% 20%, rgba(255,122,26,.2), transparent 30%), #06142F; }
+            .section-title { text-align: center; max-width: 720px; margin: 0 auto 62px; }
+            .kicker, .side-label { display: inline-flex; align-items: center; gap: 9px; color: var(--blue); font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: .16em; margin-bottom: 16px; }
+            .kicker::before, .kicker::after, .side-label::before { content: ''; width: 32px; height: 3px; border-radius: 999px; background: var(--blue); }
+            .kicker--orange, .side-label--orange { color: var(--orange); }
+            .kicker--orange::before, .kicker--orange::after, .side-label--orange::before { background: var(--orange); }
+            .section-title h2, .split-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2rem, 4vw, 3.35rem); letter-spacing: -.055em; line-height: 1.03; color: var(--ink); }
+            .section--dark .section-title h2 { color: #fff; }
+            .section-title p, .lead { color: var(--muted); line-height: 1.75; font-size: 1.05rem; margin-top: 18px; }
+            .section--dark .section-title p { color: rgba(255,255,255,.65); }
+            .about { background: #fff; }
+            .about__grid, .contact__grid { display: grid; grid-template-columns: .92fr 1.08fr; gap: 70px; align-items: center; }
+            .about p:not(.lead) { color: var(--muted); line-height: 1.75; margin-top: 14px; }
+            .feature-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+            .feature-card, .service-card, .project-card, .testimonial-card, .form-card { background: rgba(255,255,255,.86); border: 1px solid rgba(20,99,255,.1); border-radius: var(--radius); box-shadow: 0 20px 60px rgba(5,20,47,.07); transition: .28s ease; }
+            .feature-card { padding: 26px; min-height: 210px; }
+            .feature-card:hover, .service-card:hover, .testimonial-card:hover { transform: translateY(-8px); border-color: rgba(255,122,26,.32); box-shadow: var(--shadow); }
+            .feature-card span { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 16px; margin-bottom: 22px; background: linear-gradient(135deg, rgba(20,99,255,.1), rgba(255,122,26,.16)); font-size: 22px; }
+            .feature-card h3, .service-card h3, .timeline-item h3, .project-card h3 { font-size: 1.14rem; color: var(--ink); margin-bottom: 10px; }
+            .feature-card p, .service-card p, .project-card p, .timeline-item p, .testimonial-card p { color: var(--muted); line-height: 1.68; font-size: .95rem; }
+            .service-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+            .service-card { padding: 30px 24px; min-height: 292px; position: relative; overflow: hidden; }
+            .service-card::after { content: ''; position: absolute; width: 140px; height: 140px; border-radius: 50%; background: rgba(255,122,26,.08); right: -70px; bottom: -70px; transition: .3s ease; }
+            .service-card:hover::after { transform: scale(1.8); }
+            .service-card__icon { width: 58px; height: 58px; border-radius: 20px; display: grid; place-items: center; font-size: 26px; background: var(--ink); margin-bottom: 24px; box-shadow: inset 0 0 0 2px rgba(255,255,255,.08); }
+            .service-card span { display: inline-block; margin-top: 22px; color: var(--blue); font-weight: 900; font-size: 13px; }
+            .portfolio { background: #fff; overflow: hidden; }
+            .portfolio::before { content: ''; position: absolute; width: 800px; height: 800px; left: -350px; top: 80px; background: radial-gradient(circle, rgba(20,99,255,.12), transparent 62%); }
+            .portfolio-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+            .project-card { overflow: hidden; background: #fff; }
+            .project-card:hover { transform: translateY(-9px) rotate(-.5deg); box-shadow: var(--shadow); }
+            .project-card__visual { height: 210px; position: relative; display: grid; place-items: center; overflow: hidden; background: linear-gradient(135deg, rgba(20,99,255,.14), rgba(255,122,26,.18)); }
+            .project-card:nth-child(even) .project-card__visual { background: linear-gradient(135deg, rgba(255,122,26,.18), rgba(20,99,255,.14)); }
+            .project-card__number { position: absolute; left: 22px; top: 18px; color: rgba(5,20,47,.23); font-family: 'Space Grotesk', sans-serif; font-size: 54px; font-weight: 700; }
+            .project-card__shape { width: 120px; height: 120px; border-radius: 36px; background: linear-gradient(135deg, var(--blue), var(--orange)); box-shadow: 0 22px 70px rgba(20,99,255,.25); transform: rotate(18deg); transition: .35s ease; }
+            .project-card:hover .project-card__shape { transform: rotate(45deg) scale(1.08); border-radius: 50%; }
+            .project-card__body { padding: 24px; }
+            .project-card__body > span { display: inline-flex; color: var(--orange); font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: .1em; margin-bottom: 10px; }
+            .timeline { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+            .timeline::before { content: ''; position: absolute; left: 0; right: 0; top: 32px; height: 2px; background: linear-gradient(90deg, var(--blue), var(--orange)); opacity: .45; }
+            .timeline-item { position: relative; z-index: 1; padding: 30px 24px; border-radius: 26px; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.12); backdrop-filter: blur(16px); min-height: 230px; }
+            .timeline-item span { display: grid; place-items: center; width: 64px; height: 64px; border-radius: 20px; margin-bottom: 26px; color: #fff; font-family: 'Space Grotesk', sans-serif; font-size: 22px; background: linear-gradient(135deg, var(--blue), var(--orange)); box-shadow: 0 18px 40px rgba(0,0,0,.22); }
+            .timeline-item h3 { color: #fff; }
+            .timeline-item p { color: rgba(255,255,255,.66); }
+            .testimonials { background: linear-gradient(180deg, #fff, #F6F8FF); }
+            .testimonial-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+            .testimonial-card { padding: 30px; }
+            .stars { color: var(--orange); letter-spacing: 2px; margin-bottom: 18px; }
+            .testimonial-card > p { font-size: 1rem; margin-bottom: 26px; font-style: italic; }
+            .testimonial-card strong { display: block; color: var(--ink); }
+            .testimonial-card span { color: var(--muted); font-size: 13px; }
+            .contact { background: radial-gradient(circle at 95% 20%, rgba(255,122,26,.12), transparent 30%), #fff; }
+            .contact-list { display: grid; gap: 14px; margin-top: 34px; }
+            .contact-list a { display: flex; align-items: center; gap: 14px; text-decoration: none; padding: 18px; border-radius: 22px; background: #fff; border: 1px solid rgba(20,99,255,.11); box-shadow: 0 16px 50px rgba(5,20,47,.06); transition: .25s ease; }
+            .contact-list a:hover { transform: translateX(8px); border-color: rgba(255,122,26,.35); }
+            .contact-list span { width: 48px; height: 48px; border-radius: 16px; display: grid; place-items: center; background: linear-gradient(135deg, rgba(20,99,255,.1), rgba(255,122,26,.14)); }
+            .contact-list small { display: block; color: var(--muted); margin-top: 3px; }
+            .form-card { padding: 34px; background: rgba(255,255,255,.92); }
+            .form-card h3 { font-size: 1.4rem; margin-bottom: 22px; }
+            .form-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+            label { display: grid; gap: 8px; color: var(--ink); font-size: 13px; font-weight: 900; margin-bottom: 14px; }
+            input, textarea { width: 100%; border: 1px solid rgba(20,99,255,.14); background: #F8FAFF; border-radius: 16px; padding: 15px 16px; outline: none; color: var(--ink); font-size: 14px; transition: .2s ease; resize: vertical; }
+            input:focus, textarea:focus { border-color: var(--orange); background: #fff; box-shadow: 0 0 0 4px rgba(255,122,26,.1); }
+            .form-button { width: 100%; margin-top: 8px; }
+            .form-button:disabled { opacity: .48; cursor: not-allowed; transform: none; }
+            .cta { padding: 92px 0; background: #06142F; }
+            .cta__box { text-align: center; color: #fff; padding: clamp(34px, 6vw, 70px); border-radius: 36px; background: radial-gradient(circle at 16% 16%, rgba(20,99,255,.38), transparent 34%), radial-gradient(circle at 86% 20%, rgba(255,122,26,.28), transparent 34%), linear-gradient(135deg, rgba(255,255,255,.09), rgba(255,255,255,.04)); border: 1px solid rgba(255,255,255,.13); box-shadow: 0 34px 100px rgba(0,0,0,.24); }
+            .cta__box > span { font-size: 44px; }
+            .cta__box h2 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2rem, 4vw, 3.4rem); line-height: 1.03; letter-spacing: -.055em; max-width: 760px; margin: 18px auto; }
+            .cta__box p { color: rgba(255,255,255,.66); max-width: 600px; margin: 0 auto 30px; line-height: 1.7; }
+            .footer { background: #030B1C; color: rgba(255,255,255,.62); padding: 70px 0 30px; }
+            .footer__grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 42px; padding-bottom: 42px; }
+            .footer-brand { color: #fff; font-weight: 900; display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+            .footer-brand span { width: 42px; height: 42px; border-radius: 14px; display: grid; place-items: center; background: linear-gradient(135deg, var(--blue), var(--orange)); }
+            .footer p { max-width: 350px; line-height: 1.7; }
+            .footer b { display: block; color: #fff; margin-bottom: 16px; }
+            .footer a { display: block; text-decoration: none; margin-bottom: 10px; transition: .2s ease; }
+            .footer a:hover { color: var(--orange-soft); transform: translateX(4px); }
+            .footer__bottom { border-top: 1px solid rgba(255,255,255,.08); padding-top: 24px; display: flex; justify-content: space-between; gap: 14px; flex-wrap: wrap; font-size: 13px; }
+            .reveal { opacity: 0; transform: translateY(34px); transition: opacity .75s ease, transform .75s cubic-bezier(.2,.8,.2,1); }
+            .reveal--show { opacity: 1; transform: translateY(0); }
+            @keyframes rotate { to { transform: rotate(360deg); } }
+            @keyframes pulse { from { transform: scale(.9); opacity: .38; } to { transform: scale(1.06); opacity: .62; } }
+            @keyframes drift { to { transform: translate3d(-70px, -70px, 0); } }
+            @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
+            @keyframes cardFloat { 0%,100% { transform: rotate(2deg) translateY(0); } 50% { transform: rotate(-1deg) translateY(-12px); } }
+            @keyframes bar { from { transform: scaleX(.72); transform-origin: left; } to { transform: scaleX(1); transform-origin: left; } }
+            @media (max-width: 980px) {
+              .menu-toggle { display: grid; }
+              .navbar__links { position: absolute; top: 80px; left: 20px; right: 20px; display: none; flex-direction: column; align-items: stretch; padding: 12px; border-radius: 26px; background: rgba(255,255,255,.96); box-shadow: var(--shadow); border: 1px solid rgba(20,99,255,.12); }
+              .navbar__links--open { display: flex; }
+              .navbar__links button, .navbar--scrolled .navbar__links button { color: var(--ink); text-align: left; }
+              .navbar__links .nav-cta { text-align: center; color: #fff !important; }
+              .hero__inner, .about__grid, .contact__grid { grid-template-columns: 1fr; gap: 44px; }
+              .hero-card-wrap { justify-self: start; }
+              .service-grid, .portfolio-grid, .timeline, .testimonial-grid, .footer__grid { grid-template-columns: repeat(2, 1fr); }
+              .timeline::before { display: none; }
+            }
+            @media (max-width: 640px) {
+              .container, .hero__inner, .navbar__inner { width: calc(100% - 28px); }
+              .navbar { top: 12px; }
+              .brand__text { display: none; }
+              .hero { padding-top: 118px; }
+              .hero h1 { font-size: clamp(2.5rem, 15vw, 4.2rem); }
+              .hero-card { transform: none; animation: none; }
+              .hero-card__screen { min-height: 360px; padding: 24px; }
+              .screen-title { font-size: 28px; }
+              .mini-grid, .feature-grid, .service-grid, .portfolio-grid, .timeline, .testimonial-grid, .footer__grid, .form-row { grid-template-columns: 1fr; }
+              .section { padding: 82px 0; }
+              .footer__bottom { flex-direction: column; }
+            }
+          `}</style>
+          <Navbar scrolled={scrolled} />
+          <Hero />
+          <Sobre />
+          <Servicos />
+          <Portfolio />
+          <Processo />
+          <Depoimentos />
+          <Contato />
+          <CTA />
+          <Footer />
+        </>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+    root.render(<App />);
+  </script>
+</body>
+</html>
