@@ -1,3 +1,351 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="WS Sistemas e Sites: sites, landing pages e sistemas web com estratégia, personalidade e performance.">
+  <title>WS Sistemas e Sites</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #071a3d;
+      --ink-deep: #04112b;
+      --blue: #1463ff;
+      --blue-light: #eaf1ff;
+      --orange: #ff7a1a;
+      --orange-light: #fff0e4;
+      --paper: #f7f8fc;
+      --white: #ffffff;
+      --muted: #68738a;
+      --line: rgba(7, 26, 61, .12);
+      --shadow: 0 24px 70px rgba(7, 26, 61, .12);
+      --radius: 28px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: "DM Sans", sans-serif; color: var(--ink); background: var(--white); overflow-x: hidden; }
+    button, input, textarea { font: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    a { color: inherit; }
+    .container { width: min(1160px, calc(100% - 48px)); margin: 0 auto; }
+    .section { padding: 120px 0; }
+    .section-label { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; color: var(--blue); font-size: .75rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; }
+    .section-label::before { content: ""; width: 34px; height: 2px; background: currentColor; }
+    .section-label.orange { color: var(--orange); }
+    h1, h2, h3 { font-family: "Manrope", sans-serif; }
+    h2 { font-size: clamp(2.2rem, 4.4vw, 4.5rem); line-height: 1.03; letter-spacing: -.055em; }
+    .lead { color: var(--muted); font-size: 1.08rem; line-height: 1.75; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 54px; padding: 0 23px; border: 0; border-radius: 999px; text-decoration: none; font-weight: 700; cursor: pointer; transition: transform .25s ease, box-shadow .25s ease, background .25s ease; }
+    .btn:hover { transform: translateY(-3px); }
+    .btn-primary { color: var(--white); background: var(--orange); box-shadow: 0 14px 30px rgba(255, 122, 26, .25); }
+    .btn-primary:hover { box-shadow: 0 18px 38px rgba(255, 122, 26, .35); }
+    .btn-secondary { color: var(--white); border: 1px solid rgba(255,255,255,.25); background: rgba(255,255,255,.08); }
+    .arrow { font-size: 1.15rem; transition: transform .25s ease; }
+    .btn:hover .arrow, .text-link:hover .arrow { transform: translateX(4px); }
+
+    .navbar { position: fixed; z-index: 50; top: 20px; left: 0; right: 0; }
+    .nav-inner { width: min(1160px, calc(100% - 48px)); min-height: 70px; margin: auto; padding: 9px 10px 9px 18px; display: flex; align-items: center; justify-content: space-between; border: 1px solid rgba(255,255,255,.18); border-radius: 999px; background: rgba(4,17,43,.72); backdrop-filter: blur(18px); box-shadow: 0 16px 45px rgba(0,0,0,.12); transition: background .25s ease; }
+    .brand { display: flex; align-items: center; gap: 11px; color: var(--white); text-decoration: none; font-weight: 700; }
+    .brand-mark { width: 43px; height: 43px; display: grid; place-items: center; border-radius: 50%; background: var(--blue); font-family: "Manrope", sans-serif; font-weight: 800; }
+    .brand b { color: var(--orange); }
+    .nav-links { display: flex; align-items: center; gap: 4px; }
+    .nav-links a { padding: 12px 13px; color: rgba(255,255,255,.76); text-decoration: none; font-size: .9rem; font-weight: 600; }
+    .nav-links a:hover { color: var(--white); }
+    .nav-links .nav-cta { margin-left: 6px; padding: 13px 19px; color: var(--white); border-radius: 999px; background: var(--orange); }
+    .menu-toggle { display: none; width: 45px; height: 45px; border: 0; border-radius: 50%; background: rgba(255,255,255,.1); cursor: pointer; }
+    .menu-toggle span { display: block; width: 19px; height: 2px; margin: 4px auto; background: var(--white); }
+
+    .hero { position: relative; min-height: 950px; display: flex; align-items: center; padding: 155px 0 100px; color: var(--white); background: var(--ink-deep); overflow: hidden; }
+    .hero::before { content: ""; position: absolute; width: 720px; height: 720px; right: -250px; top: -210px; border: 1px solid rgba(255,255,255,.1); border-radius: 50%; box-shadow: 0 0 0 90px rgba(255,255,255,.025), 0 0 0 180px rgba(255,255,255,.018); }
+    .hero::after { content: ""; position: absolute; left: -8%; bottom: -42%; width: 650px; height: 650px; border-radius: 50%; background: var(--blue); filter: blur(130px); opacity: .22; }
+    .hero-grid { position: relative; z-index: 1; display: grid; grid-template-columns: 1.15fr .85fr; gap: 80px; align-items: center; }
+    .hero-kicker { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 28px; color: rgba(255,255,255,.72); font-size: .8rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
+    .hero-kicker span { width: 9px; height: 9px; border-radius: 50%; background: var(--orange); box-shadow: 0 0 0 7px rgba(255,122,26,.13); }
+    .hero h1 { max-width: 760px; font-size: clamp(3.5rem, 7vw, 7.3rem); line-height: .91; letter-spacing: -.075em; }
+    .hero h1 span { color: var(--orange); }
+    .hero-copy > p { max-width: 610px; margin: 32px 0 38px; color: rgba(255,255,255,.66); font-size: 1.14rem; line-height: 1.7; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+    .hero-note { display: flex; gap: 36px; margin-top: 58px; padding-top: 25px; border-top: 1px solid rgba(255,255,255,.13); }
+    .hero-note div { max-width: 180px; }
+    .hero-note strong { display: block; margin-bottom: 5px; color: var(--white); font-family: "Manrope", sans-serif; }
+    .hero-note small { color: rgba(255,255,255,.48); line-height: 1.45; }
+
+    .hero-showcase { position: relative; min-height: 590px; }
+    .showcase-card { position: absolute; overflow: hidden; border-radius: 30px; box-shadow: 0 35px 85px rgba(0,0,0,.32); }
+    .showcase-main { width: 88%; right: 0; top: 20px; padding: 16px; transform: rotate(2.5deg); background: #f5f1e9; }
+    .browser-top { display: flex; align-items: center; gap: 7px; height: 38px; }
+    .browser-top i { width: 9px; height: 9px; border-radius: 50%; background: #ccd1da; }
+    .browser-top i:first-child { background: var(--orange); }
+    .mock-page { min-height: 445px; padding: 38px; border-radius: 20px; color: var(--ink); background: var(--white); }
+    .mock-nav { display: flex; justify-content: space-between; font-size: .68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; }
+    .mock-hero { margin-top: 70px; }
+    .mock-hero small { color: var(--orange); font-weight: 700; }
+    .mock-hero h3 { max-width: 280px; margin: 13px 0 18px; font-size: 2.45rem; line-height: .96; letter-spacing: -.06em; }
+    .mock-lines { display: grid; gap: 8px; width: 80%; }
+    .mock-lines i { height: 7px; border-radius: 10px; background: #e7eaf1; }
+    .mock-lines i:last-child { width: 65%; }
+    .mock-button { width: 110px; height: 34px; margin-top: 28px; border-radius: 999px; background: var(--blue); }
+    .showcase-small { left: -8px; bottom: 5px; width: 230px; padding: 25px; color: var(--white); background: var(--blue); transform: rotate(-5deg); }
+    .showcase-small span { color: rgba(255,255,255,.65); font-size: .75rem; text-transform: uppercase; letter-spacing: .12em; }
+    .showcase-small strong { display: block; margin-top: 34px; font-family: "Manrope", sans-serif; font-size: 2.6rem; line-height: .95; }
+    .showcase-tag { position: absolute; right: -16px; bottom: 35px; padding: 14px 20px; border-radius: 999px; color: var(--ink); background: var(--orange); font-weight: 700; transform: rotate(-4deg); }
+
+    .about { background: var(--paper); }
+    .about-grid { display: grid; grid-template-columns: .85fr 1.15fr; gap: 90px; align-items: start; }
+    .about-intro { position: sticky; top: 130px; }
+    .about-intro h2 { max-width: 500px; }
+    .about-content { display: grid; gap: 22px; }
+    .about-textbox { position: relative; padding: 45px; border-radius: var(--radius); color: var(--white); background: var(--ink); overflow: hidden; }
+    .about-textbox::after { content: "WS"; position: absolute; right: -20px; bottom: -54px; color: rgba(255,255,255,.045); font-family: "Manrope", sans-serif; font-size: 11rem; font-weight: 800; letter-spacing: -.1em; }
+    .about-textbox .quote { display: block; margin-bottom: 25px; color: var(--orange); font-family: Georgia, serif; font-size: 4rem; line-height: .5; }
+    .about-textbox p { position: relative; z-index: 1; max-width: 640px; font-family: "Manrope", sans-serif; font-size: clamp(1.45rem, 2.5vw, 2.25rem); line-height: 1.3; letter-spacing: -.035em; }
+    .about-detail { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .about-detail article { padding: 28px; border: 1px solid var(--line); border-radius: 22px; background: var(--white); }
+    .about-detail span { display: block; margin-bottom: 40px; color: var(--orange); font-family: "Manrope", sans-serif; font-size: 1.25rem; font-weight: 800; }
+    .about-detail h3 { margin-bottom: 8px; font-size: 1.05rem; }
+    .about-detail p { color: var(--muted); font-size: .94rem; line-height: 1.6; }
+
+    .services-head { display: grid; grid-template-columns: 1fr .7fr; gap: 80px; align-items: end; margin-bottom: 65px; }
+    .services-head .lead { max-width: 500px; padding-bottom: 7px; }
+    .service-list { border-top: 1px solid var(--line); }
+    .service-item { display: grid; grid-template-columns: 90px 1fr 1fr 55px; gap: 28px; align-items: center; padding: 30px 12px; border-bottom: 1px solid var(--line); transition: padding .25s ease, background .25s ease; }
+    .service-item:hover { padding-left: 24px; padding-right: 24px; background: var(--paper); }
+    .service-number { color: var(--orange); font-size: .82rem; font-weight: 700; }
+    .service-item h3 { font-size: clamp(1.25rem, 2vw, 1.8rem); letter-spacing: -.03em; }
+    .service-item p { color: var(--muted); line-height: 1.55; }
+    .service-icon { width: 45px; height: 45px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 50%; color: var(--blue); font-size: 1.2rem; transition: .25s ease; }
+    .service-item:hover .service-icon { color: var(--white); border-color: var(--blue); background: var(--blue); transform: rotate(45deg); }
+
+    .portfolio { color: var(--white); background: var(--ink-deep); overflow: hidden; }
+    .portfolio-head { display: flex; justify-content: space-between; gap: 40px; align-items: end; margin-bottom: 65px; }
+    .portfolio-head h2 { max-width: 700px; }
+    .portfolio-head p { max-width: 360px; color: rgba(255,255,255,.58); line-height: 1.65; }
+    .project-grid { display: grid; grid-template-columns: 1.08fr .92fr; gap: 24px; }
+    .project { position: relative; min-height: 500px; display: flex; flex-direction: column; justify-content: space-between; padding: 40px; border-radius: 32px; overflow: hidden; transition: transform .35s ease; }
+    .project:hover { transform: translateY(-8px); }
+    .project-wide { grid-column: 1 / -1; min-height: 430px; }
+    .project-orange { color: var(--ink); background: var(--orange); }
+    .project-blue { background: var(--blue); }
+    .project-cream { color: var(--ink); background: #f0eee8; }
+    .project-top { position: relative; z-index: 2; display: flex; justify-content: space-between; gap: 20px; }
+    .project-type { font-size: .76rem; font-weight: 700; text-transform: uppercase; letter-spacing: .13em; }
+    .project-index { opacity: .55; }
+    .project-copy { position: relative; z-index: 2; max-width: 470px; }
+    .project-copy h3 { margin-bottom: 12px; font-size: clamp(2rem, 4vw, 4rem); line-height: .95; letter-spacing: -.065em; }
+    .project-copy p { max-width: 420px; opacity: .72; line-height: 1.6; }
+    .project-art { position: absolute; transition: transform .5s ease; }
+    .project:hover .project-art { transform: rotate(4deg) scale(1.03); }
+    .art-dashboard { width: 55%; height: 68%; right: -3%; top: 18%; padding: 22px; border-radius: 24px 0 0 24px; background: var(--white); box-shadow: -25px 30px 70px rgba(7,26,61,.18); transform: rotate(-3deg); }
+    .dash-line { height: 8px; margin-bottom: 12px; border-radius: 10px; background: #e7eaf0; }
+    .dash-line:nth-child(2) { width: 65%; }
+    .dash-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 28px; }
+    .dash-cards i { height: 110px; border-radius: 16px; background: var(--blue-light); }
+    .dash-cards i:last-child { background: var(--orange-light); }
+    .art-phone { width: 230px; height: 390px; right: 8%; top: 14%; padding: 12px; border: 8px solid var(--ink-deep); border-radius: 38px; background: var(--white); transform: rotate(7deg); box-shadow: 0 30px 60px rgba(0,0,0,.22); }
+    .phone-screen { height: 100%; padding: 45px 18px 18px; border-radius: 23px; background: var(--paper); }
+    .phone-screen i { display: block; height: 55px; margin-bottom: 10px; border-radius: 13px; background: var(--white); }
+    .phone-screen i:first-child { height: 95px; background: var(--orange); }
+    .art-site { width: 52%; height: 78%; right: 4%; top: 11%; padding: 30px; border: 12px solid var(--white); border-radius: 24px; background: var(--ink); box-shadow: 0 30px 70px rgba(0,0,0,.18); transform: rotate(2deg); }
+    .art-site::before { content: "IMÓVEIS QUE COMBINAM COM VOCÊ"; display: block; max-width: 270px; color: var(--white); font-family: "Manrope", sans-serif; font-size: 2rem; font-weight: 800; line-height: 1; }
+    .art-site::after { content: "Explorar imóveis →"; display: inline-block; margin-top: 35px; padding: 12px 16px; border-radius: 999px; color: var(--ink); background: var(--orange); font-size: .75rem; font-weight: 700; }
+
+    .process { background: var(--paper); }
+    .process-grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: 90px; }
+    .process-intro p { max-width: 430px; margin-top: 25px; }
+    .steps { counter-reset: step; }
+    .step { display: grid; grid-template-columns: 70px 1fr; gap: 25px; padding: 30px 0; border-bottom: 1px solid var(--line); }
+    .step:first-child { border-top: 1px solid var(--line); }
+    .step-number { width: 54px; height: 54px; display: grid; place-items: center; border-radius: 50%; color: var(--white); background: var(--blue); font-family: "Manrope", sans-serif; font-weight: 700; }
+    .step h3 { margin: 2px 0 8px; font-size: 1.35rem; }
+    .step p { color: var(--muted); line-height: 1.6; }
+
+    .contact { position: relative; color: var(--white); background: var(--ink); overflow: hidden; }
+    .contact::before { content: ""; position: absolute; width: 520px; height: 520px; right: -180px; bottom: -230px; border-radius: 50%; background: var(--orange); opacity: .12; }
+    .contact-grid { position: relative; z-index: 1; display: grid; grid-template-columns: .82fr 1.18fr; gap: 75px; align-items: start; }
+    .contact-copy h2 { max-width: 500px; }
+    .contact-copy > p { max-width: 470px; margin: 25px 0 40px; color: rgba(255,255,255,.62); line-height: 1.7; }
+    .contact-channels { display: grid; gap: 12px; }
+    .contact-channel { display: flex; align-items: center; gap: 16px; padding: 17px; border: 1px solid rgba(255,255,255,.12); border-radius: 18px; text-decoration: none; background: rgba(255,255,255,.045); transition: background .25s ease, transform .25s ease; }
+    .contact-channel:hover { background: rgba(255,255,255,.09); transform: translateX(5px); }
+    .channel-icon { width: 46px; height: 46px; display: grid; place-items: center; border-radius: 50%; color: var(--ink); background: var(--orange); font-weight: 800; }
+    .contact-channel strong, .contact-channel small { display: block; }
+    .contact-channel small { margin-top: 3px; color: rgba(255,255,255,.5); }
+    .contact-card { padding: 42px; border-radius: 30px; color: var(--ink); background: var(--white); box-shadow: 0 35px 80px rgba(0,0,0,.2); }
+    .form-heading { display: flex; justify-content: space-between; gap: 20px; align-items: start; margin-bottom: 30px; }
+    .form-heading h3 { font-size: 1.55rem; letter-spacing: -.035em; }
+    .form-heading span { padding: 8px 12px; border-radius: 999px; color: var(--blue); background: var(--blue-light); font-size: .72rem; font-weight: 700; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    label { display: grid; gap: 8px; margin-bottom: 15px; font-size: .78rem; font-weight: 700; }
+    input, textarea { width: 100%; padding: 15px 16px; border: 1px solid var(--line); border-radius: 14px; outline: none; color: var(--ink); background: var(--paper); transition: border .2s ease, box-shadow .2s ease, background .2s ease; resize: vertical; }
+    input:focus, textarea:focus { border-color: var(--blue); background: var(--white); box-shadow: 0 0 0 4px rgba(20,99,255,.09); }
+    .contact-card .btn { width: 100%; margin-top: 5px; }
+    .form-note { margin-top: 14px; color: var(--muted); font-size: .75rem; text-align: center; }
+
+    .footer { padding: 65px 0 28px; color: rgba(255,255,255,.58); background: #020a19; }
+    .footer-top { display: flex; justify-content: space-between; gap: 50px; padding-bottom: 45px; }
+    .footer .brand { margin-bottom: 17px; }
+    .footer-copy { max-width: 390px; line-height: 1.65; }
+    .footer-nav { display: flex; flex-wrap: wrap; gap: 10px 30px; align-content: start; }
+    .footer-nav a { color: rgba(255,255,255,.65); text-decoration: none; }
+    .footer-nav a:hover { color: var(--orange); }
+    .footer-bottom { display: flex; justify-content: space-between; gap: 20px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,.08); font-size: .8rem; }
+
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity .75s ease, transform .75s cubic-bezier(.2,.75,.2,1); }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    @media (max-width: 980px) {
+      .menu-toggle { display: block; }
+      .nav-links { position: absolute; top: 79px; left: 24px; right: 24px; display: none; flex-direction: column; align-items: stretch; padding: 12px; border-radius: 24px; background: var(--white); box-shadow: var(--shadow); }
+      .nav-links.open { display: flex; }
+      .nav-links a { color: var(--ink); }
+      .nav-links a:hover { color: var(--blue); }
+      .nav-links .nav-cta { margin: 5px 0 0; color: var(--white); text-align: center; }
+      .hero { min-height: auto; }
+      .hero-grid, .about-grid, .process-grid, .contact-grid { grid-template-columns: 1fr; }
+      .hero-grid { gap: 45px; }
+      .hero-showcase { min-height: 570px; max-width: 600px; }
+      .about-intro { position: static; }
+      .services-head { grid-template-columns: 1fr; gap: 25px; }
+      .service-item { grid-template-columns: 60px 1fr 1fr 45px; }
+      .portfolio-head { align-items: start; flex-direction: column; }
+    }
+
+    @media (max-width: 720px) {
+      .container, .nav-inner { width: min(100% - 28px, 1160px); }
+      .section { padding: 88px 0; }
+      .navbar { top: 12px; }
+      .nav-inner { min-height: 62px; padding-left: 10px; }
+      .brand-name { display: none; }
+      .hero { padding: 125px 0 78px; }
+      .hero h1 { font-size: clamp(3.15rem, 16vw, 5.2rem); }
+      .hero-note { gap: 20px; }
+      .hero-showcase { min-height: 430px; }
+      .showcase-main { width: 94%; }
+      .mock-page { min-height: 330px; padding: 23px; }
+      .mock-hero { margin-top: 42px; }
+      .mock-hero h3 { font-size: 1.85rem; }
+      .showcase-small { width: 175px; padding: 20px; }
+      .showcase-small strong { font-size: 2rem; }
+      .showcase-tag { right: 0; bottom: 4px; }
+      .about-grid, .process-grid, .contact-grid { gap: 50px; }
+      .about-textbox, .contact-card { padding: 29px; }
+      .about-detail, .form-row { grid-template-columns: 1fr; }
+      .service-item { grid-template-columns: 45px 1fr 40px; gap: 15px; }
+      .service-item p { display: none; }
+      .project-grid { grid-template-columns: 1fr; }
+      .project-wide { grid-column: auto; }
+      .project { min-height: 480px; padding: 28px; }
+      .project-art { opacity: .72; }
+      .art-dashboard, .art-site { width: 75%; right: -18%; }
+      .art-phone { right: -3%; }
+      .project-copy { text-shadow: 0 1px 18px rgba(0,0,0,.08); }
+      .footer-top, .footer-bottom { flex-direction: column; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar" aria-label="Navegação principal">
+    <div class="nav-inner">
+      <a class="brand" href="#inicio" aria-label="WS Sistemas e Sites - início">
+        <span class="brand-mark">WS</span>
+        <span class="brand-name">Sistemas <b>&</b> Sites</span>
+      </a>
+      <button class="menu-toggle" aria-label="Abrir menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-links">
+        <a href="#sobre">Sobre</a>
+        <a href="#servicos">Serviços</a>
+        <a href="#portfolio">Portfólio</a>
+        <a href="#processo">Processo</a>
+        <a class="nav-cta" href="#contato">Falar sobre um projeto</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <header class="hero" id="inicio">
+      <div class="container hero-grid">
+        <div class="hero-copy reveal">
+          <div class="hero-kicker"><span></span> Design e tecnologia feitos com intenção</div>
+          <h1>Seu negócio merece um digital com <span>presença.</span></h1>
+          <p>Desenhamos sites e sistemas que parecem com a sua marca, conversam com as pessoas certas e tornam o seu negócio mais simples de encontrar, entender e escolher.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#contato">Tirar uma ideia do papel <span class="arrow">→</span></a>
+            <a class="btn btn-secondary" href="#portfolio">Conhecer projetos</a>
+          </div>
+          <div class="hero-note">
+            <div><strong>Feito sob medida</strong><small>Nada de aparência genérica ou solução pronta.</small></div>
+            <div><strong>Do início ao ar</strong><small>Estratégia, visual, desenvolvimento e suporte.</small></div>
+          </div>
+        </div>
+
+        <div class="hero-showcase reveal">
+          <div class="showcase-card showcase-main">
+            <div class="browser-top"><i></i><i></i><i></i></div>
+            <div class="mock-page">
+              <div class="mock-nav"><span>marca</span><span>menu · contato</span></div>
+              <div class="mock-hero">
+                <small>Uma nova presença digital</small>
+                <h3>Ideias que ganham forma.</h3>
+                <div class="mock-lines"><i></i><i></i></div>
+                <div class="mock-button"></div>
+              </div>
+            </div>
+          </div>
+          <div class="showcase-card showcase-small"><span>Projetos com clareza</span><strong>Design que faz sentido.</strong></div>
+          <div class="showcase-tag">estratégia + criatividade</div>
+        </div>
+      </div>
+    </header>
+
+    <section class="section about" id="sobre">
+      <div class="container about-grid">
+        <div class="about-intro reveal">
+          <div class="section-label">Sobre nós</div>
+          <h2>Antes de criar páginas, entendemos pessoas.</h2>
+        </div>
+        <div class="about-content">
+          <div class="about-textbox reveal">
+            <span class="quote">“</span>
+            <p>A WS nasceu para transformar boas ideias em experiências digitais claras, bonitas e realmente úteis.</p>
+          </div>
+          <p class="lead reveal">Somos um estúdio de desenvolvimento que aproxima tecnologia e comunicação. Escutamos o que o seu negócio precisa, organizamos o que importa e construímos uma solução com personalidade, sem complicar o processo.</p>
+          <div class="about-detail">
+            <article class="reveal"><span>01</span><h3>Identidade antes de tendência</h3><p>O projeto acompanha a personalidade da marca, não uma estética passageira.</p></article>
+            <article class="reveal"><span>02</span><h3>Clareza em cada etapa</h3><p>Você entende o que está sendo feito, por que está sendo feito e o que vem depois.</p></article>
+            <article class="reveal"><span>03</span><h3>Design com objetivo</h3><p>Cada escolha visual ajuda a informar, gerar confiança ou conduzir uma ação.</p></article>
+            <article class="reveal"><span>04</span><h3>Tecnologia que não pesa</h3><p>Experiências rápidas, responsivas e fáceis de usar em qualquer dispositivo.</p></article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section services" id="servicos">
+      <div class="container">
+        <div class="services-head reveal">
+          <div><div class="section-label orange">O que fazemos</div><h2>Uma solução certa para cada momento do negócio.</h2></div>
+          <p class="lead">Da primeira presença online a uma plataforma que organiza toda a operação, construímos o necessário sem excesso.</p>
+        </div>
+        <div class="service-list">
+          <article class="service-item reveal"><span class="service-number">01</span><h3>Sites institucionais</h3><p>Uma apresentação sólida e envolvente para sua empresa ganhar confiança no digital.</p><span class="service-icon">↗</span></article>
+          <article class="service-item reveal"><span class="service-number">02</span><h3>Landing pages</h3><p>Páginas focadas em campanhas, lançamentos, captação de contatos e conversão.</p><span class="service-icon">↗</span></article>
+          <article class="service-item reveal"><span class="service-number">03</span><h3>Sistemas web</h3><p>Ferramentas personalizadas para organizar dados, equipes, clientes e processos.</p><span class="service-icon">↗</span></article>
+          <article class="service-item reveal"><span class="service-number">04</span><h3>Evolução e suporte</h3><p>Ajustes, novas funcionalidades e acompanhamento para o projeto continuar crescendo.</p><span class="service-icon">↗</span></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section portfolio" id="portfolio">
       <div class="container">
         <div class="portfolio-head reveal">
           <div><div class="section-label orange">Portfólio conceitual</div><h2>Projetos pensados para serem lembrados.</h2></div>
@@ -22,6 +370,7 @@
         </div>
       </div>
     </section>
+
     <section class="section process" id="processo">
       <div class="container process-grid">
         <div class="process-intro reveal">
@@ -37,6 +386,7 @@
         </div>
       </div>
     </section>
+
     <section class="section contact" id="contato">
       <div class="container contact-grid">
         <div class="contact-copy reveal">
@@ -48,6 +398,7 @@
             <a class="contact-channel" href="https://wa.me/5500000000000" target="_blank" rel="noopener noreferrer"><span class="channel-icon">W</span><span><strong>WhatsApp</strong><small>Uma conversa rápida para começar</small></span></a>
           </div>
         </div>
+
         <form class="contact-card reveal" id="contact-form">
           <div class="form-heading"><h3>Fale sobre seu projeto</h3><span>Resposta em breve</span></div>
           <div class="form-row">
@@ -62,6 +413,7 @@
       </div>
     </section>
   </main>
+
   <footer class="footer">
     <div class="container">
       <div class="footer-top">
@@ -74,17 +426,21 @@
       <div class="footer-bottom"><span>© 2026 WS Sistemas e Sites. Todos os direitos reservados.</span><span>Feito com intenção, detalhe e código.</span></div>
     </div>
   </footer>
+
   <script>
     const menuButton = document.querySelector('.menu-toggle');
     const navLinks = document.querySelector('.nav-links');
+
     menuButton.addEventListener('click', () => {
       const isOpen = navLinks.classList.toggle('open');
       menuButton.setAttribute('aria-expanded', String(isOpen));
     });
+
     navLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
       navLinks.classList.remove('open');
       menuButton.setAttribute('aria-expanded', 'false');
     }));
+
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -93,7 +449,9 @@
         }
       });
     }, { threshold: 0.12 });
+
     document.querySelectorAll('.reveal').forEach(element => observer.observe(element));
+
     document.getElementById('contact-form').addEventListener('submit', event => {
       event.preventDefault();
       const data = new FormData(event.currentTarget);
