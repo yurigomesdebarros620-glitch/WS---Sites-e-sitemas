@@ -58,109 +58,129 @@
     .menu-toggle { display: none; width: 45px; height: 45px; border: 0; border-radius: 50%; background: rgba(255,255,255,.1); cursor: pointer; }
     .menu-toggle span { display: block; width: 19px; height: 2px; margin: 4px auto; background: var(--white); }
 
-    .hero { position: relative; min-height: 950px; display: flex; align-items: center; padding: 155px 0 100px; color: var(--white); background: var(--ink-deep); overflow: hidden; }
-    .hero::before { content: ""; position: absolute; width: 720px; height: 720px; right: -250px; top: -210px; border: 1px solid rgba(255,255,255,.1); border-radius: 50%; box-shadow: 0 0 0 90px rgba(255,255,255,.025), 0 0 0 180px rgba(255,255,255,.018); }
-    .hero::after { content: ""; position: absolute; left: -8%; bottom: -42%; width: 650px; height: 650px; border-radius: 50%; background: var(--blue); filter: blur(130px); opacity: .22; }
-    .hero-grid { position: relative; z-index: 1; display: grid; grid-template-columns: 1.15fr .85fr; gap: 80px; align-items: center; }
-    .hero-kicker { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 28px; color: rgba(255,255,255,.72); font-size: .8rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
-    .hero-kicker span { width: 9px; height: 9px; border-radius: 50%; background: var(--orange); box-shadow: 0 0 0 7px rgba(255,122,26,.13); }
-    .hero h1 { max-width: 760px; font-size: clamp(3.5rem, 7vw, 7.3rem); line-height: .91; letter-spacing: -.075em; }
+    .hero { position: relative; min-height: 900px; display: flex; align-items: center; padding: 145px 0 90px; color: var(--white); background: radial-gradient(circle at 15% 15%, #102d69 0, transparent 35%), radial-gradient(circle at 88% 12%, rgba(255,122,26,.18), transparent 28%), var(--ink-deep); overflow: hidden; }
+    .hero-grid { position: relative; z-index: 2; display: grid; grid-template-columns: 1.08fr .92fr; gap: 65px; align-items: center; }
+    .hero-kicker { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 26px; padding: 10px 15px; border: 1px solid rgba(255,255,255,.14); border-radius: 999px; color: rgba(255,255,255,.78); background: rgba(255,255,255,.07); backdrop-filter: blur(12px); font-size: .76rem; font-weight: 700; }
+    .hero-kicker span { width: 9px; height: 9px; border-radius: 50%; background: var(--orange); box-shadow: 0 0 18px var(--orange); }
+    .hero h1 { max-width: 760px; font-size: clamp(3.1rem, 6.3vw, 6.2rem); line-height: .94; letter-spacing: -.067em; }
     .hero h1 span { color: var(--orange); }
-    .hero-copy > p { max-width: 610px; margin: 32px 0 38px; color: rgba(255,255,255,.66); font-size: 1.14rem; line-height: 1.7; }
+    .hero-copy > p { max-width: 610px; margin: 28px 0 34px; color: rgba(255,255,255,.68); font-size: 1.1rem; line-height: 1.72; }
     .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
-    .hero-note { display: flex; gap: 36px; margin-top: 58px; padding-top: 25px; border-top: 1px solid rgba(255,255,255,.13); }
-    .hero-note div { max-width: 180px; }
-    .hero-note strong { display: block; margin-bottom: 5px; color: var(--white); font-family: "Manrope", sans-serif; }
-    .hero-note small { color: rgba(255,255,255,.48); line-height: 1.45; }
-
+    .hero-note { display: flex; flex-wrap: wrap; gap: 13px; margin-top: 42px; }
+    .hero-note div { min-width: 128px; padding: 16px 18px; border: 1px solid rgba(255,255,255,.11); border-radius: 18px; background: rgba(255,255,255,.055); backdrop-filter: blur(12px); }
+    .hero-note strong { display: block; color: var(--white); font-family: "Manrope", sans-serif; font-size: 1.35rem; }
+    .hero-note small { display: block; margin-top: 4px; color: rgba(255,255,255,.48); }
+    .orbital { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+    .orbital-grid { position: absolute; inset: 0; opacity: .12; background-image: linear-gradient(rgba(255,255,255,.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.08) 1px, transparent 1px); background-size: 58px 58px; mask-image: linear-gradient(to bottom, #000, transparent 88%); }
+    .orbital-ring { position: absolute; right: 1%; top: 17%; width: 560px; height: 560px; border: 1px solid rgba(255,255,255,.13); border-radius: 50%; animation: orbit 20s linear infinite; }
+    .orbital-ring::before { content: ""; position: absolute; left: 50%; top: -7px; width: 13px; height: 13px; border-radius: 50%; background: var(--orange); box-shadow: 0 0 24px var(--orange); }
+    .orbital-ring.two { right: 6%; top: 23%; width: 430px; height: 430px; animation-duration: 14s; animation-direction: reverse; }
+    .orbital-glow { position: absolute; width: 370px; height: 370px; left: -130px; bottom: 3%; border-radius: 50%; background: var(--blue); filter: blur(105px); opacity: .35; }
     .hero-showcase { position: relative; min-height: 590px; }
-    .showcase-card { position: absolute; overflow: hidden; border-radius: 30px; box-shadow: 0 35px 85px rgba(0,0,0,.32); }
-    .showcase-main { width: 88%; right: 0; top: 20px; padding: 16px; transform: rotate(2.5deg); background: #f5f1e9; }
-    .browser-top { display: flex; align-items: center; gap: 7px; height: 38px; }
-    .browser-top i { width: 9px; height: 9px; border-radius: 50%; background: #ccd1da; }
-    .browser-top i:first-child { background: var(--orange); }
-    .mock-page { min-height: 445px; padding: 38px; border-radius: 20px; color: var(--ink); background: var(--white); }
-    .mock-nav { display: flex; justify-content: space-between; font-size: .68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; }
-    .mock-hero { margin-top: 70px; }
-    .mock-hero small { color: var(--orange); font-weight: 700; }
-    .mock-hero h3 { max-width: 280px; margin: 13px 0 18px; font-size: 2.45rem; line-height: .96; letter-spacing: -.06em; }
-    .mock-lines { display: grid; gap: 8px; width: 80%; }
-    .mock-lines i { height: 7px; border-radius: 10px; background: #e7eaf1; }
-    .mock-lines i:last-child { width: 65%; }
-    .mock-button { width: 110px; height: 34px; margin-top: 28px; border-radius: 999px; background: var(--blue); }
-    .showcase-small { left: -8px; bottom: 5px; width: 230px; padding: 25px; color: var(--white); background: var(--blue); transform: rotate(-5deg); }
-    .showcase-small span { color: rgba(255,255,255,.65); font-size: .75rem; text-transform: uppercase; letter-spacing: .12em; }
-    .showcase-small strong { display: block; margin-top: 34px; font-family: "Manrope", sans-serif; font-size: 2.6rem; line-height: .95; }
-    .showcase-tag { position: absolute; right: -16px; bottom: 35px; padding: 14px 20px; border-radius: 999px; color: var(--ink); background: var(--orange); font-weight: 700; transform: rotate(-4deg); }
+    .hero-card { position: relative; width: min(440px, 100%); margin: 0 0 0 auto; padding: 14px; border: 1px solid rgba(255,255,255,.2); border-radius: 34px; background: linear-gradient(145deg, rgba(255,255,255,.2), rgba(255,255,255,.05)); box-shadow: 0 40px 100px rgba(0,0,0,.34); backdrop-filter: blur(18px); transform: rotate(2deg); animation: card-float 5s ease-in-out infinite; }
+    .hero-card-top { height: 47px; display: flex; align-items: center; gap: 8px; padding-left: 12px; }
+    .hero-card-top i { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,.25); }
+    .hero-card-top i:first-child { background: var(--orange); }
+    .hero-card-top i:nth-child(2) { background: #69a7ff; }
+    .hero-screen { position: relative; min-height: 420px; padding: 30px; border-radius: 24px; background: radial-gradient(circle at 18% 20%, rgba(255,122,26,.24), transparent 30%), radial-gradient(circle at 88% 0, rgba(20,99,255,.42), transparent 38%), #071a3d; overflow: hidden; }
+    .hero-screen::after { content: ""; position: absolute; width: 220px; height: 220px; right: -80px; bottom: -80px; border: 38px solid rgba(255,255,255,.055); border-radius: 50%; }
+    .screen-pill { display: inline-flex; padding: 8px 12px; border: 1px solid rgba(255,122,26,.28); border-radius: 999px; color: #ffb45c; background: rgba(255,122,26,.12); font-size: .72rem; font-weight: 700; }
+    .screen-title { max-width: 300px; margin: 58px 0 30px; font-family: "Manrope", sans-serif; font-size: 2.2rem; font-weight: 800; line-height: 1; letter-spacing: -.05em; }
+    .screen-bars { display: grid; gap: 11px; margin-bottom: 35px; }
+    .screen-bars i { height: 10px; border-radius: 999px; background: linear-gradient(90deg, var(--blue), var(--orange)); }
+    .screen-bars i:nth-child(2) { width: 65%; opacity: .75; }
+    .screen-bars i:nth-child(3) { width: 78%; opacity: .5; }
+    .screen-grid { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; }
+    .screen-grid div { padding: 13px 9px; border: 1px solid rgba(255,255,255,.11); border-radius: 15px; background: rgba(255,255,255,.07); }
+    .screen-grid b { display: block; margin-bottom: 7px; color: #ffb45c; }
+    .screen-grid span { color: rgba(255,255,255,.65); font-size: .67rem; font-weight: 600; }
+    .hero-badge { position: absolute; right: -17px; bottom: 53px; z-index: 2; padding: 14px 18px; border-radius: 18px; color: var(--ink); background: var(--white); box-shadow: var(--shadow); font-weight: 800; }
+    .floating-chip { position: absolute; z-index: 3; padding: 10px 14px; border: 1px solid rgba(255,255,255,.15); border-radius: 999px; color: var(--white); background: rgba(255,255,255,.08); backdrop-filter: blur(12px); font-size: .72rem; font-weight: 700; }
+    .chip-one { left: 1%; top: 16%; }
+    .chip-two { right: -4%; top: 10%; }
+    @keyframes orbit { to { transform: rotate(360deg); } }
+    @keyframes card-float { 0%,100% { transform: rotate(2deg) translateY(0); } 50% { transform: rotate(-1deg) translateY(-12px); } }
 
-    .about { background: var(--paper); }
+    .about { position: relative; background: linear-gradient(145deg, #f4f7ff 0%, #fff8f2 100%); overflow: hidden; }
+    .about::before { content: ""; position: absolute; width: 430px; height: 430px; left: -220px; top: 120px; border: 70px solid rgba(20,99,255,.055); border-radius: 50%; animation: slow-spin 24s linear infinite; }
+    .about::after { content: ""; position: absolute; width: 260px; height: 260px; right: -80px; bottom: 50px; border-radius: 50%; background: rgba(255,122,26,.09); filter: blur(5px); }
     .about-grid { display: grid; grid-template-columns: .85fr 1.15fr; gap: 90px; align-items: start; }
-    .about-intro { position: sticky; top: 130px; }
+    .about-intro { position: sticky; z-index: 1; top: 130px; }
     .about-intro h2 { max-width: 500px; }
+    .about-intro::after { content: "criatividade + tecnologia"; display: inline-flex; margin-top: 30px; padding: 12px 18px; border: 1px solid rgba(20,99,255,.15); border-radius: 999px; color: var(--blue); background: rgba(255,255,255,.7); font-size: .76rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; transform: rotate(-2deg); }
     .about-content { display: grid; gap: 22px; }
-    .about-textbox { position: relative; padding: 45px; border-radius: var(--radius); color: var(--white); background: var(--ink); overflow: hidden; }
+    .about-textbox { position: relative; padding: 45px; border-radius: var(--radius); color: var(--white); background: radial-gradient(circle at 90% 10%, rgba(20,99,255,.55), transparent 36%), var(--ink); box-shadow: 0 28px 75px rgba(7,26,61,.18); overflow: hidden; transition: transform .35s ease; }
+    .about-textbox:hover { transform: translateY(-6px) rotate(.35deg); }
     .about-textbox::after { content: "WS"; position: absolute; right: -20px; bottom: -54px; color: rgba(255,255,255,.045); font-family: "Manrope", sans-serif; font-size: 11rem; font-weight: 800; letter-spacing: -.1em; }
     .about-textbox .quote { display: block; margin-bottom: 25px; color: var(--orange); font-family: Georgia, serif; font-size: 4rem; line-height: .5; }
     .about-textbox p { position: relative; z-index: 1; max-width: 640px; font-family: "Manrope", sans-serif; font-size: clamp(1.45rem, 2.5vw, 2.25rem); line-height: 1.3; letter-spacing: -.035em; }
     .about-detail { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
-    .about-detail article { padding: 28px; border: 1px solid var(--line); border-radius: 22px; background: var(--white); }
+    .about-detail article { position: relative; min-height: 210px; padding: 28px; border: 1px solid rgba(20,99,255,.11); border-radius: 22px; background: rgba(255,255,255,.82); box-shadow: 0 15px 40px rgba(7,26,61,.055); overflow: hidden; transition: transform .3s ease, box-shadow .3s ease; }
+    .about-detail article:nth-child(2), .about-detail article:nth-child(3) { background: var(--blue-light); }
+    .about-detail article:nth-child(4) { background: var(--orange-light); }
+    .about-detail article::after { content: ""; position: absolute; width: 85px; height: 85px; right: -34px; top: -34px; border-radius: 50%; background: linear-gradient(135deg, rgba(20,99,255,.15), rgba(255,122,26,.16)); transition: transform .35s ease; }
+    .about-detail article:hover { transform: translateY(-7px); box-shadow: 0 23px 55px rgba(7,26,61,.11); }
+    .about-detail article:hover::after { transform: scale(1.45); }
     .about-detail span { display: block; margin-bottom: 40px; color: var(--orange); font-family: "Manrope", sans-serif; font-size: 1.25rem; font-weight: 800; }
     .about-detail h3 { margin-bottom: 8px; font-size: 1.05rem; }
     .about-detail p { color: var(--muted); font-size: .94rem; line-height: 1.6; }
 
-    .services-head { display: grid; grid-template-columns: 1fr .7fr; gap: 80px; align-items: end; margin-bottom: 65px; }
-    .services-head .lead { max-width: 500px; padding-bottom: 7px; }
-    .service-list { border-top: 1px solid var(--line); }
-    .service-item { display: grid; grid-template-columns: 90px 1fr 1fr 55px; gap: 28px; align-items: center; padding: 30px 12px; border-bottom: 1px solid var(--line); transition: padding .25s ease, background .25s ease; }
-    .service-item:hover { padding-left: 24px; padding-right: 24px; background: var(--paper); }
+    .services { position: relative; color: var(--white); background: radial-gradient(circle at 8% 10%, rgba(20,99,255,.42), transparent 30%), radial-gradient(circle at 92% 85%, rgba(255,122,26,.2), transparent 28%), var(--ink-deep); overflow: hidden; }
+    .services::after { content: ""; position: absolute; width: 500px; height: 500px; right: -260px; top: -220px; border: 1px solid rgba(255,255,255,.1); border-radius: 50%; box-shadow: 0 0 0 70px rgba(255,255,255,.02), 0 0 0 140px rgba(255,255,255,.015); }
+    .services-head { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr .7fr; gap: 80px; align-items: end; margin-bottom: 55px; }
+    .services-head .lead { max-width: 500px; padding-bottom: 7px; color: rgba(255,255,255,.62); }
+    .service-list { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+    .service-item { position: relative; min-height: 260px; display: grid; grid-template-columns: 55px 1fr 45px; grid-template-rows: auto 1fr; gap: 20px; align-items: start; padding: 30px; border: 1px solid rgba(255,255,255,.11); border-radius: 25px; background: rgba(255,255,255,.065); backdrop-filter: blur(12px); overflow: hidden; transition: transform .3s ease, background .3s ease, border-color .3s ease; }
+    .service-item::after { content: ""; position: absolute; width: 150px; height: 150px; right: -85px; bottom: -85px; border-radius: 50%; background: var(--orange); opacity: .09; transition: transform .4s ease; }
+    .service-item:hover { transform: translateY(-7px); border-color: rgba(255,122,26,.35); background: rgba(255,255,255,.1); }
+    .service-item:hover::after { transform: scale(1.8); }
     .service-number { color: var(--orange); font-size: .82rem; font-weight: 700; }
-    .service-item h3 { font-size: clamp(1.25rem, 2vw, 1.8rem); letter-spacing: -.03em; }
-    .service-item p { color: var(--muted); line-height: 1.55; }
-    .service-icon { width: 45px; height: 45px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 50%; color: var(--blue); font-size: 1.2rem; transition: .25s ease; }
-    .service-item:hover .service-icon { color: var(--white); border-color: var(--blue); background: var(--blue); transform: rotate(45deg); }
+    .service-item h3 { align-self: center; color: var(--white); font-size: clamp(1.25rem, 2vw, 1.75rem); letter-spacing: -.03em; }
+    .service-item p { grid-column: 2 / 4; color: rgba(255,255,255,.58); line-height: 1.65; }
+    .service-icon { width: 45px; height: 45px; display: grid; place-items: center; border: 1px solid rgba(255,255,255,.16); border-radius: 50%; color: var(--white); font-size: 1.2rem; transition: .25s ease; }
+    .service-item:hover .service-icon { border-color: var(--orange); background: var(--orange); transform: rotate(45deg); }
 
-    .portfolio { color: var(--white); background: var(--ink-deep); overflow: hidden; }
-    .portfolio-head { display: flex; justify-content: space-between; gap: 40px; align-items: end; margin-bottom: 65px; }
+    .portfolio { position: relative; background: var(--white); overflow: hidden; }
+    .portfolio::before { content: ""; position: absolute; width: 760px; height: 760px; left: -360px; top: 80px; border-radius: 50%; background: radial-gradient(circle, rgba(20,99,255,.12), transparent 65%); }
+    .portfolio-head { position: relative; display: flex; justify-content: space-between; gap: 40px; align-items: end; margin-bottom: 60px; }
     .portfolio-head h2 { max-width: 700px; }
-    .portfolio-head p { max-width: 360px; color: rgba(255,255,255,.58); line-height: 1.65; }
-    .project-grid { display: grid; grid-template-columns: 1.08fr .92fr; gap: 24px; }
-    .project { position: relative; min-height: 500px; display: flex; flex-direction: column; justify-content: space-between; padding: 40px; border-radius: 32px; overflow: hidden; transition: transform .35s ease; }
-    .project:hover { transform: translateY(-8px); }
-    .project-wide { grid-column: 1 / -1; min-height: 430px; }
-    .project-orange { color: var(--ink); background: var(--orange); }
-    .project-blue { background: var(--blue); }
-    .project-cream { color: var(--ink); background: #f0eee8; }
-    .project-top { position: relative; z-index: 2; display: flex; justify-content: space-between; gap: 20px; }
-    .project-type { font-size: .76rem; font-weight: 700; text-transform: uppercase; letter-spacing: .13em; }
-    .project-index { opacity: .55; }
-    .project-copy { position: relative; z-index: 2; max-width: 470px; }
-    .project-copy h3 { margin-bottom: 12px; font-size: clamp(2rem, 4vw, 4rem); line-height: .95; letter-spacing: -.065em; }
-    .project-copy p { max-width: 420px; opacity: .72; line-height: 1.6; }
-    .project-art { position: absolute; transition: transform .5s ease; }
-    .project:hover .project-art { transform: rotate(4deg) scale(1.03); }
-    .art-dashboard { width: 55%; height: 68%; right: -3%; top: 18%; padding: 22px; border-radius: 24px 0 0 24px; background: var(--white); box-shadow: -25px 30px 70px rgba(7,26,61,.18); transform: rotate(-3deg); }
-    .dash-line { height: 8px; margin-bottom: 12px; border-radius: 10px; background: #e7eaf0; }
-    .dash-line:nth-child(2) { width: 65%; }
-    .dash-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 28px; }
-    .dash-cards i { height: 110px; border-radius: 16px; background: var(--blue-light); }
-    .dash-cards i:last-child { background: var(--orange-light); }
-    .art-phone { width: 230px; height: 390px; right: 8%; top: 14%; padding: 12px; border: 8px solid var(--ink-deep); border-radius: 38px; background: var(--white); transform: rotate(7deg); box-shadow: 0 30px 60px rgba(0,0,0,.22); }
-    .phone-screen { height: 100%; padding: 45px 18px 18px; border-radius: 23px; background: var(--paper); }
-    .phone-screen i { display: block; height: 55px; margin-bottom: 10px; border-radius: 13px; background: var(--white); }
-    .phone-screen i:first-child { height: 95px; background: var(--orange); }
-    .art-site { width: 52%; height: 78%; right: 4%; top: 11%; padding: 30px; border: 12px solid var(--white); border-radius: 24px; background: var(--ink); box-shadow: 0 30px 70px rgba(0,0,0,.18); transform: rotate(2deg); }
-    .art-site::before { content: "IMÓVEIS QUE COMBINAM COM VOCÊ"; display: block; max-width: 270px; color: var(--white); font-family: "Manrope", sans-serif; font-size: 2rem; font-weight: 800; line-height: 1; }
-    .art-site::after { content: "Explorar imóveis →"; display: inline-block; margin-top: 35px; padding: 12px 16px; border-radius: 999px; color: var(--ink); background: var(--orange); font-size: .75rem; font-weight: 700; }
+    .portfolio-head p { max-width: 390px; color: var(--muted); line-height: 1.65; }
+    .project-grid { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+    .project-card { overflow: hidden; border: 1px solid var(--line); border-radius: 27px; background: var(--white); box-shadow: 0 18px 55px rgba(7,26,61,.07); transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease; }
+    .project-card:hover { transform: translateY(-8px) rotate(-.4deg); border-color: rgba(255,122,26,.35); box-shadow: var(--shadow); }
+    .project-visual { position: relative; height: 215px; display: grid; place-items: center; overflow: hidden; background: linear-gradient(135deg, rgba(20,99,255,.13), rgba(255,122,26,.18)); }
+    .project-card:nth-child(even) .project-visual { background: linear-gradient(135deg, rgba(255,122,26,.17), rgba(20,99,255,.13)); }
+    .project-number { position: absolute; left: 21px; top: 16px; color: rgba(7,26,61,.21); font-family: "Manrope", sans-serif; font-size: 3.2rem; font-weight: 800; letter-spacing: -.08em; }
+    .project-shape { position: relative; width: 120px; height: 120px; border-radius: 34px; background: linear-gradient(135deg, var(--blue), var(--orange)); box-shadow: 0 23px 60px rgba(20,99,255,.25); transform: rotate(18deg); transition: transform .4s ease, border-radius .4s ease; }
+    .project-shape::after { content: ""; position: absolute; inset: 20px; border: 2px solid rgba(255,255,255,.5); border-radius: 22px; }
+    .project-card:nth-child(2) .project-shape, .project-card:nth-child(5) .project-shape { border-radius: 50%; }
+    .project-card:nth-child(3) .project-shape, .project-card:nth-child(6) .project-shape { width: 145px; height: 92px; }
+    .project-card:hover .project-shape { transform: rotate(44deg) scale(1.07); border-radius: 50%; }
+    .project-body { padding: 25px; }
+    .project-type { display: inline-block; margin-bottom: 9px; color: var(--orange); font-size: .7rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+    .project-body h3 { margin-bottom: 9px; font-size: 1.2rem; letter-spacing: -.025em; }
+    .project-body p { color: var(--muted); font-size: .94rem; line-height: 1.62; }
 
-    .process { background: var(--paper); }
+    .process { position: relative; background: linear-gradient(135deg, #eef3ff 0%, #fff 48%, #fff3e9 100%); overflow: hidden; }
+    .process::before { content: "PROCESSO"; position: absolute; left: 2%; bottom: -28px; color: rgba(7,26,61,.035); font-family: "Manrope", sans-serif; font-size: clamp(6rem, 14vw, 13rem); font-weight: 800; letter-spacing: -.09em; }
     .process-grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: 90px; }
+    .process-intro { position: relative; z-index: 1; }
     .process-intro p { max-width: 430px; margin-top: 25px; }
-    .steps { counter-reset: step; }
-    .step { display: grid; grid-template-columns: 70px 1fr; gap: 25px; padding: 30px 0; border-bottom: 1px solid var(--line); }
-    .step:first-child { border-top: 1px solid var(--line); }
-    .step-number { width: 54px; height: 54px; display: grid; place-items: center; border-radius: 50%; color: var(--white); background: var(--blue); font-family: "Manrope", sans-serif; font-weight: 700; }
+    .process-note { position: relative; margin-top: 34px; padding: 25px; border-radius: 22px; color: var(--white); background: var(--blue); box-shadow: 0 20px 45px rgba(20,99,255,.2); transform: rotate(-1.5deg); overflow: hidden; }
+    .process-note::after { content: "→"; position: absolute; right: 18px; bottom: -25px; color: rgba(255,255,255,.12); font-size: 8rem; font-weight: 800; transform: rotate(-20deg); }
+    .process-note strong { position: relative; z-index: 1; display: block; margin-bottom: 8px; font-family: "Manrope", sans-serif; font-size: 1.15rem; }
+    .process-note span { position: relative; z-index: 1; color: rgba(255,255,255,.7); font-size: .9rem; line-height: 1.5; }
+    .steps { position: relative; z-index: 1; display: grid; gap: 14px; }
+    .step { display: grid; grid-template-columns: 70px 1fr; gap: 22px; padding: 25px; border: 1px solid rgba(20,99,255,.1); border-radius: 22px; background: rgba(255,255,255,.8); box-shadow: 0 15px 40px rgba(7,26,61,.055); transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease; }
+    .step:nth-child(even) { margin-left: 35px; background: rgba(234,241,255,.88); }
+    .step:hover { transform: translateX(7px); border-color: rgba(255,122,26,.35); box-shadow: 0 22px 50px rgba(7,26,61,.1); }
+    .step-number { width: 54px; height: 54px; display: grid; place-items: center; border-radius: 17px; color: var(--white); background: linear-gradient(135deg, var(--blue), #4b8cff); box-shadow: 0 12px 25px rgba(20,99,255,.2); font-family: "Manrope", sans-serif; font-weight: 700; transition: transform .3s ease; }
+    .step:nth-child(even) .step-number { background: linear-gradient(135deg, var(--orange), #ffad5e); box-shadow: 0 12px 25px rgba(255,122,26,.2); }
+    .step:hover .step-number { transform: rotate(8deg) scale(1.06); }
     .step h3 { margin: 2px 0 8px; font-size: 1.35rem; }
     .step p { color: var(--muted); line-height: 1.6; }
+
+    @keyframes slow-spin { to { transform: rotate(360deg); } }
 
     .contact { position: relative; color: var(--white); background: var(--ink); overflow: hidden; }
     .contact::before { content: ""; position: absolute; width: 520px; height: 520px; right: -180px; bottom: -230px; border-radius: 50%; background: var(--orange); opacity: .12; }
@@ -195,6 +215,9 @@
 
     .reveal { opacity: 0; transform: translateY(28px); transition: opacity .75s ease, transform .75s cubic-bezier(.2,.75,.2,1); }
     .reveal.visible { opacity: 1; transform: none; }
+    .about-detail .reveal:nth-child(2), .service-list .reveal:nth-child(2), .steps .reveal:nth-child(2) { transition-delay: .08s; }
+    .about-detail .reveal:nth-child(3), .service-list .reveal:nth-child(3), .steps .reveal:nth-child(3) { transition-delay: .16s; }
+    .about-detail .reveal:nth-child(4), .service-list .reveal:nth-child(4), .steps .reveal:nth-child(4) { transition-delay: .24s; }
 
     @media (max-width: 980px) {
       .menu-toggle { display: block; }
@@ -209,8 +232,9 @@
       .hero-showcase { min-height: 570px; max-width: 600px; }
       .about-intro { position: static; }
       .services-head { grid-template-columns: 1fr; gap: 25px; }
-      .service-item { grid-template-columns: 60px 1fr 1fr 45px; }
+      .service-list { grid-template-columns: 1fr 1fr; }
       .portfolio-head { align-items: start; flex-direction: column; }
+      .project-grid { grid-template-columns: repeat(2, 1fr); }
     }
 
     @media (max-width: 720px) {
@@ -220,28 +244,23 @@
       .nav-inner { min-height: 62px; padding-left: 10px; }
       .brand-name { display: none; }
       .hero { padding: 125px 0 78px; }
-      .hero h1 { font-size: clamp(3.15rem, 16vw, 5.2rem); }
+      .hero h1 { font-size: clamp(2.8rem, 14vw, 4.6rem); }
       .hero-note { gap: 20px; }
-      .hero-showcase { min-height: 430px; }
-      .showcase-main { width: 94%; }
-      .mock-page { min-height: 330px; padding: 23px; }
-      .mock-hero { margin-top: 42px; }
-      .mock-hero h3 { font-size: 1.85rem; }
-      .showcase-small { width: 175px; padding: 20px; }
-      .showcase-small strong { font-size: 2rem; }
-      .showcase-tag { right: 0; bottom: 4px; }
+      .hero-note div { flex: 1; min-width: 100px; }
+      .hero-showcase { min-height: 500px; }
+      .hero-card { margin: 0 auto; transform: none; animation: none; }
+      .hero-screen { min-height: 365px; padding: 24px; }
+      .screen-title { margin-top: 45px; font-size: 1.8rem; }
+      .hero-badge { right: -4px; bottom: 35px; }
+      .floating-chip { display: none; }
       .about-grid, .process-grid, .contact-grid { gap: 50px; }
       .about-textbox, .contact-card { padding: 29px; }
       .about-detail, .form-row { grid-template-columns: 1fr; }
-      .service-item { grid-template-columns: 45px 1fr 40px; gap: 15px; }
-      .service-item p { display: none; }
+      .service-list { grid-template-columns: 1fr; }
+      .service-item { min-height: 230px; grid-template-columns: 45px 1fr 40px; gap: 15px; padding: 24px; }
+      .service-item p { display: block; }
+      .step:nth-child(even) { margin-left: 0; }
       .project-grid { grid-template-columns: 1fr; }
-      .project-wide { grid-column: auto; }
-      .project { min-height: 480px; padding: 28px; }
-      .project-art { opacity: .72; }
-      .art-dashboard, .art-site { width: 75%; right: -18%; }
-      .art-phone { right: -3%; }
-      .project-copy { text-shadow: 0 1px 18px rgba(0,0,0,.08); }
       .footer-top, .footer-bottom { flex-direction: column; }
     }
 
@@ -274,36 +293,45 @@
 
   <main>
     <header class="hero" id="inicio">
+      <div class="orbital" aria-hidden="true">
+        <div class="orbital-grid"></div>
+        <div class="orbital-glow"></div>
+        <div class="orbital-ring"></div>
+        <div class="orbital-ring two"></div>
+      </div>
       <div class="container hero-grid">
         <div class="hero-copy reveal">
-          <div class="hero-kicker"><span></span> Design e tecnologia feitos com intenção</div>
-          <h1>Seu negócio merece um digital com <span>presença.</span></h1>
-          <p>Desenhamos sites e sistemas que parecem com a sua marca, conversam com as pessoas certas e tornam o seu negócio mais simples de encontrar, entender e escolher.</p>
+          <div class="hero-kicker"><span></span> Estúdio digital para marcas que querem se destacar</div>
+          <h1>Sites e sistemas com visual <span>único</span>, profissional e feito para vender.</h1>
+          <p>Criamos experiências digitais com identidade forte, performance e acabamento cuidadoso, sem cara de template pronto.</p>
           <div class="hero-actions">
-            <a class="btn btn-primary" href="#contato">Tirar uma ideia do papel <span class="arrow">→</span></a>
-            <a class="btn btn-secondary" href="#portfolio">Conhecer projetos</a>
+            <a class="btn btn-primary" href="#contato">Começar projeto <span class="arrow">→</span></a>
+            <a class="btn btn-secondary" href="#portfolio">Ver conceito visual</a>
           </div>
           <div class="hero-note">
-            <div><strong>Feito sob medida</strong><small>Nada de aparência genérica ou solução pronta.</small></div>
-            <div><strong>Do início ao ar</strong><small>Estratégia, visual, desenvolvimento e suporte.</small></div>
+            <div><strong>50+</strong><small>projetos</small></div>
+            <div><strong>5+</strong><small>anos</small></div>
+            <div><strong>100%</strong><small>foco no cliente</small></div>
           </div>
         </div>
 
         <div class="hero-showcase reveal">
-          <div class="showcase-card showcase-main">
-            <div class="browser-top"><i></i><i></i><i></i></div>
-            <div class="mock-page">
-              <div class="mock-nav"><span>marca</span><span>menu · contato</span></div>
-              <div class="mock-hero">
-                <small>Uma nova presença digital</small>
-                <h3>Ideias que ganham forma.</h3>
-                <div class="mock-lines"><i></i><i></i></div>
-                <div class="mock-button"></div>
+          <span class="floating-chip chip-one">UX</span>
+          <span class="floating-chip chip-two">React</span>
+          <div class="hero-card">
+            <div class="hero-card-top"><i></i><i></i><i></i></div>
+            <div class="hero-screen">
+              <span class="screen-pill">WS Launch System</span>
+              <div class="screen-title">Design estratégico + tecnologia</div>
+              <div class="screen-bars"><i></i><i></i><i></i></div>
+              <div class="screen-grid">
+                <div><b>01</b><span>Identidade</span></div>
+                <div><b>02</b><span>Conversão</span></div>
+                <div><b>03</b><span>Performance</span></div>
               </div>
             </div>
+            <div class="hero-badge">+ visual exclusivo</div>
           </div>
-          <div class="showcase-card showcase-small"><span>Projetos com clareza</span><strong>Design que faz sentido.</strong></div>
-          <div class="showcase-tag">estratégia + criatividade</div>
         </div>
       </div>
     </header>
@@ -348,24 +376,33 @@
     <section class="section portfolio" id="portfolio">
       <div class="container">
         <div class="portfolio-head reveal">
-          <div><div class="section-label orange">Portfólio conceitual</div><h2>Projetos pensados para serem lembrados.</h2></div>
-          <p>Cada negócio pede uma linguagem. Estes conceitos mostram como estratégia e identidade podem assumir formas bem diferentes.</p>
+          <div><div class="section-label orange">Portfólio</div><h2>Projetos com personalidade.</h2></div>
+          <p>Conceitos que mostram como cada entrega pode ganhar uma identidade própria, mantendo clareza e resultado.</p>
         </div>
         <div class="project-grid">
-          <article class="project project-orange reveal">
-            <div class="project-top"><span class="project-type">Sistema de gestão</span><span class="project-index">01</span></div>
-            <div class="project-art art-dashboard"><div class="dash-line"></div><div class="dash-line"></div><div class="dash-cards"><i></i><i></i></div></div>
-            <div class="project-copy"><h3>ClínicaPro</h3><p>Agenda, pacientes e rotina administrativa reunidos em uma experiência simples.</p></div>
+          <article class="project-card reveal">
+            <div class="project-visual"><span class="project-number">01</span><div class="project-shape"></div></div>
+            <div class="project-body"><span class="project-type">Sistema web</span><h3>ClínicaPro</h3><p>Agenda, pacientes e painel administrativo reunidos em uma plataforma limpa.</p></div>
           </article>
-          <article class="project project-blue reveal">
-            <div class="project-top"><span class="project-type">Experiência mobile</span><span class="project-index">02</span></div>
-            <div class="project-art art-phone"><div class="phone-screen"><i></i><i></i><i></i><i></i></div></div>
-            <div class="project-copy"><h3>RestaurApp</h3><p>Cardápio, pedidos e reservas em uma jornada rápida e intuitiva.</p></div>
+          <article class="project-card reveal">
+            <div class="project-visual"><span class="project-number">02</span><div class="project-shape"></div></div>
+            <div class="project-body"><span class="project-type">E-commerce</span><h3>MegaStore</h3><p>Loja moderna com vitrine, checkout e gestão de produtos.</p></div>
           </article>
-          <article class="project project-wide project-cream reveal">
-            <div class="project-top"><span class="project-type">Site imobiliário</span><span class="project-index">03</span></div>
-            <div class="project-art art-site"></div>
-            <div class="project-copy"><h3>ImóvelSmart</h3><p>Uma vitrine editorial que valoriza os imóveis e facilita a busca certa.</p></div>
+          <article class="project-card reveal">
+            <div class="project-visual"><span class="project-number">03</span><div class="project-shape"></div></div>
+            <div class="project-body"><span class="project-type">Site</span><h3>ImóvelSmart</h3><p>Busca inteligente e apresentação cuidadosa para valorizar cada imóvel.</p></div>
+          </article>
+          <article class="project-card reveal">
+            <div class="project-visual"><span class="project-number">04</span><div class="project-shape"></div></div>
+            <div class="project-body"><span class="project-type">Landing page</span><h3>ConvertX</h3><p>Página direta e rápida, criada para campanhas de conversão.</p></div>
+          </article>
+          <article class="project-card reveal">
+            <div class="project-visual"><span class="project-number">05</span><div class="project-shape"></div></div>
+            <div class="project-body"><span class="project-type">Dashboard</span><h3>FinanceFlow</h3><p>Dados, gráficos e gestão financeira apresentados sem complicação.</p></div>
+          </article>
+          <article class="project-card reveal">
+            <div class="project-visual"><span class="project-number">06</span><div class="project-shape"></div></div>
+            <div class="project-body"><span class="project-type">Sistema</span><h3>RestaurApp</h3><p>Cardápio digital, reservas e presença online para restaurantes.</p></div>
           </article>
         </div>
       </div>
@@ -377,6 +414,7 @@
           <div class="section-label">Como trabalhamos</div>
           <h2>Um processo próximo, sem mistério.</h2>
           <p class="lead">Você participa das decisões importantes e acompanha o projeto de forma clara, do primeiro papo até a publicação.</p>
+          <div class="process-note"><strong>Você acompanha de verdade.</strong><span>Sem desaparecer durante o projeto: cada etapa tem contexto, conversa e aprovação.</span></div>
         </div>
         <div class="steps">
           <article class="step reveal"><span class="step-number">01</span><div><h3>Conversa e diagnóstico</h3><p>Entendemos o negócio, o público, os objetivos e o cenário atual.</p></div></article>
